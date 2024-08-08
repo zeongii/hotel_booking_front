@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 let Auth = () => {
     let [inputs, setInputs] = useState({
-        username: '',
+        email: '',
         password: ''
     });
 
@@ -17,14 +17,16 @@ let Auth = () => {
         })
     };
 
-    let navigate = useNavigate();
-
+    let navigate = useNavigate()
+    let onRegister = () => {
+        navigate('/user/register')
+    }
     let onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
-        formData.append('username', inputs.username);
+        formData.append('email', inputs.email);
         formData.append('password', inputs.password);
-        console.log(formData);
+        console.log(inputs)
 
         let response = await axios({
             url: 'http://localhost:8080/user/auth',
@@ -33,13 +35,14 @@ let Auth = () => {
             withCredentials: true
         });
 
+
         if (response.status === 200 && response.data.result === 'success') {
             let userInfo = {
                 id: response.data.id,
                 nickname: response.data.nickname,
                 role: response.data.role
             }
-            navigate('/hotel/showList', {state: {userInfo}});
+            navigate('/hotel/hotelAll', {state: {userInfo:userInfo}});
         }
     }
 
@@ -56,9 +59,9 @@ let Auth = () => {
                     <tr>
                         <td>아이디</td>
                         <td><FormControl
-                            type={'text'}
-                            name={'username'}
-                            value={inputs.username}
+                            type={'email'}
+                            name={'email'}
+                            value={inputs.email}
                             onChange={onChange}/>
                         </td>
                     </tr>
@@ -72,8 +75,11 @@ let Auth = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={2}>
+                        <td>
                             <Button type={'submit'}>로그인</Button>
+                        </td>
+                        <td>
+                            <Button onClick={onRegister}>회원가입</Button>
                         </td>
                     </tr>
                     </tbody>
