@@ -8,6 +8,8 @@ import HotelOne from "./hotel/hotelOne";
 import Register from "./user/Register";
 import RoomRegister from "./room/RoomRegister";
 import HotelList from "./hotel/HotelList";
+import RoomOne from "./room/RoomOne";
+import RoomUpdate from "./room/RoomUpdate";
 
 function App() {
     return (
@@ -18,7 +20,9 @@ function App() {
                 <Route path="/hotel/hotelAll" element={<HotelList/>}/>
                 <Route path="/hotel/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/user/register" element={<Register/>}/>
-                <Route path="room/register/:hotelId" element={<RoomRegister/>}/>
+                <Route path="/room/register/:hotelId" element={<RoomRegister/>}/>
+                <Route path="/room/roomOne/:roomId" element={<RoomOne/>}/>
+                <Route path="/room/roomUpdate/:roomId" element={<RoomUpdate/>}/>
             </Routes>
         </div>
     );

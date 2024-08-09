@@ -1,11 +1,12 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
 
 
-let RoomRegister= () => {
-    let hotelId=parseInt(1)
+let RoomUpdate= () =>{
+    let parms  =useParams()
+    let roomId=parms.roomId
 
     const roomTypeList=[
         {id:1, typeName:'스탠다드+싱글+시티뷰'},
@@ -21,8 +22,7 @@ let RoomRegister= () => {
         {id:11, typeName:'레지던스+시티뷰'},
         {id:12, typeName:'레지던스+오션뷰'}
     ]
-
-    let [inputs,setInputs] = useState({
+    let [inputs, setInputs] = useState({
         roomName: '',
         roomTypeId: '',
         roomMax: '',
@@ -33,39 +33,40 @@ let RoomRegister= () => {
         breakfastPrice: ''
     })
 
-    let [data, setData] = useState({roomTypeList:[]})
-
-    let nevigate = useNavigate()
-
-    let moveToNext = (roomId) => {
-        nevigate(`/room/roomOne/${roomId}`)
-    }
-
     let onChange = (e) => {
         let {name, value} = e.target
-        if (name === "roomTypeId") {
-            value = parseInt(value, 10);        }
-
         setInputs({
             ...inputs,
-            [name]: value,
-
+            [name]: value
         })
     }
+    let nevigate=useNavigate()
+    let moveToNext = (id) => {
+        nevigate(`/room/roomOne/${id}`)
+    }
 
-    let onSubmit = async (e) => {
+    let onSubmit= async (e) => {
         e.preventDefault()
-        try {
-            let resp = await axios.post(`http://localhost:8080/room/write/`+hotelId, inputs)
-
-            if (resp.data.roomId !== undefined) {
-                moveToNext()
-            }
-
-        } catch (error) {
-            console.error(error)
+        //나중에 글쓴이 확인하는거 넣어야함 if문으로
+           let resp=await axios.post('http://localhost:8080/room/update',inputs,{
+               withCredentials:true
+           })
+        if(resp.status===200) {
+            moveToNext(resp.data.destRoomId)
         }
     }
+
+    useEffect(()=> {
+        let getUpdate= async () => {
+            let resp =await axios.get('http://localhost:8080/room/roomOne/'+roomId, {
+                withCredentials:true
+            })
+            if(resp.status===200) {
+                setInputs(resp.data)
+            }
+        }
+        getUpdate()
+    },[])
 
     return (
         <Container className={"mt-3"}>
@@ -73,7 +74,7 @@ let RoomRegister= () => {
                 <Table striped hover bordered>
                     <thead>
                     <tr>
-                        <td colSpan={2} className={"text-center"}>객실 등록하기</td>
+                        <td colSpan={2} className={"text-center"}>객실 수정하기</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -162,7 +163,7 @@ let RoomRegister= () => {
                     <tr>
                         <td colSpan={2} className={'text-center'}>
                             <Button type={'submit'}>
-                                등록하기
+                                수정하기
                             </Button>
                         </td>
                     </tr>
@@ -175,4 +176,4 @@ let RoomRegister= () => {
 
 }
 
-export default RoomRegister
+export default RoomUpdate
