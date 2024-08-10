@@ -1,28 +1,29 @@
-import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
-import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
+import { Button, Container, FormControl, FormSelect, Table } from "react-bootstrap";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+let RoomRegister = () => {
+    let hotelId = parseInt(1);
 
-let RoomRegister= () => {
-    let hotelId=parseInt(1)
+    const roomTypeList = [
+        { id: 1, typeName: '스탠다드+싱글+시티뷰' },
+        { id: 2, typeName: '스탠다드+싱글+오션뷰' },
+        { id: 3, typeName: '스탠다드+더블+시티뷰' },
+        { id: 4, typeName: '스탠다드+더블+오션뷰' },
+        { id: 5, typeName: '디럭스+싱글+시티뷰' },
+        { id: 6, typeName: '디럭스+싱글+오션뷰' },
+        { id: 7, typeName: '디럭스+더블+시티뷰' },
+        { id: 8, typeName: '디럭스+더블+오션뷰' },
+        { id: 9, typeName: '스위트+시티뷰' },
+        { id: 10, typeName: '스위트+오션뷰' },
+        { id: 11, typeName: '레지던스+시티뷰' },
+        { id: 12, typeName: '레지던스+오션뷰' }
+    ];
 
-    const roomTypeList=[
-        {id:1, typeName:'스탠다드+싱글+시티뷰'},
-        {id:2, typeName:'스탠다드+싱글+오션뷰'},
-        {id:3, typeName:'스탠다드+더블+시티뷰'},
-        {id:4, typeName:'스탠다드+더블+오션뷰'},
-        {id:5, typeName:'디럭스+싱글+시티뷰'},
-        {id:6, typeName:'디럭스+싱글+오션뷰'},
-        {id:7, typeName:'디럭스+더블+시티뷰'},
-        {id:8, typeName:'디럭스+더블+오션뷰'},
-        {id:9, typeName:'스위트+시티뷰'},
-        {id:10, typeName:'스위트+오션뷰'},
-        {id:11, typeName:'레지던스+시티뷰'},
-        {id:12, typeName:'레지던스+오션뷰'}
-    ]
-
-    let [inputs,setInputs] = useState({
+    let [inputs, setInputs] = useState({
         roomName: '',
         roomTypeId: '',
         roomMax: '',
@@ -30,46 +31,68 @@ let RoomRegister= () => {
         roomContent: '',
         checkIn: '',
         checkOut: '',
-        breakfastPrice: ''
-    })
+        breakfastPrice: '',
+        File: []
+    });
 
-    let [data, setData] = useState({roomTypeList:[]})
-
-    let nevigate = useNavigate()
+    let navigate = useNavigate();
 
     let moveToNext = (roomId) => {
-        nevigate(`/room/roomOne/${roomId}`)
-    }
+        navigate(`/room/roomOne/${roomId}`);
+    };
 
     let onChange = (e) => {
-        let {name, value} = e.target
+        let { name, value } = e.target;
         if (name === "roomTypeId") {
-            value = parseInt(value, 10);        }
+            value = parseInt(value, 10);
+        }
 
         setInputs({
             ...inputs,
             [name]: value,
+        });
+    };
 
-        })
-    }
+    let onEditorChange = (event, editor) => {
+        const data = editor.getData();
+        setInputs({
+            ...inputs,
+            roomContent: data,
+        });
+    };
 
     let onSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const formData = new FormData();
+        for (const key in inputs) {
+            if (key === 'File') {
+                inputs[key].forEach(file => {
+                    formData.append('files', file);
+                });
+            } else {
+                formData.append(key, inputs[key]);
+            }
+        }
+
         try {
-            let resp = await axios.post(`http://localhost:8080/room/write/`+hotelId, inputs)
+            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
             if (resp.data.roomId !== undefined) {
-                moveToNext()
+                moveToNext(resp.data.roomId);
             }
 
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
     return (
         <Container className={"mt-3"}>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} encType={"multipart/form-data"}>
                 <Table striped hover bordered>
                     <thead>
                     <tr>
@@ -84,7 +107,7 @@ let RoomRegister= () => {
                                 type={'text'}
                                 value={inputs.roomName}
                                 name={'roomName'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +129,7 @@ let RoomRegister= () => {
                                 type={'number'}
                                 value={inputs.roomMax}
                                 name={'roomMax'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
@@ -116,17 +139,17 @@ let RoomRegister= () => {
                                 type={'number'}
                                 value={inputs.roomPrice}
                                 name={'roomPrice'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
                         <td>내용</td>
                         <td>
-                            <textarea
-                                name={'roomContent'}
-                                value={inputs.roomContent}
-                                className={"form-control"}
-                                onChange={onChange}/>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={inputs.roomContent}
+                                onChange={onEditorChange}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -136,7 +159,7 @@ let RoomRegister= () => {
                                 type={'number'}
                                 value={inputs.breakfastPrice}
                                 name={'breakfastPrice'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
@@ -146,7 +169,7 @@ let RoomRegister= () => {
                                 type={'datetime-local'}
                                 value={inputs.checkIn}
                                 name={'checkIn'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
@@ -156,7 +179,21 @@ let RoomRegister= () => {
                                 type={'datetime-local'}
                                 value={inputs.checkOut}
                                 name={'checkOut'}
-                                onChange={onChange}/>
+                                onChange={onChange} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>파일</td>
+                        <td>
+                            <FormControl
+                                type={'file'}
+                                name={'File'} multiple
+                                onChange={(e) => {
+                                    setInputs({
+                                        ...inputs,
+                                        File: Array.from(e.target.files)
+                                    });
+                                }} />
                         </td>
                     </tr>
                     <tr>
@@ -169,10 +206,8 @@ let RoomRegister= () => {
                     </tbody>
                 </Table>
             </form>
-
         </Container>
-    )
+    );
+};
 
-}
-
-export default RoomRegister
+export default RoomRegister;
