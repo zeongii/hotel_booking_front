@@ -43,8 +43,17 @@ let Auth = () => {
         }
     }
 
+    let onClick = async (e) => {
+        e.preventDefault();
+
+        let response = await axios({
+            url: 'http://localhost:8080/'
+        })
+    }
+
     return (
         <Container>
+            <button onClick={onClick}>클릭하면 호텔 리스트</button>
             <form onSubmit={onSubmit}>
                 <Table striped hover bordered>
                     <thead>
