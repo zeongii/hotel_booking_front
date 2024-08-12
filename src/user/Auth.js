@@ -84,6 +84,12 @@ let Auth = () => {
                         <td colSpan={2}>
                             <Button type={'submit'}>로그인</Button>
                         </td>
+                        <td>
+                            <Button>아이디 찾기</Button>
+                        </td>
+                        <td>
+                            <Button>비밀번호 찾기</Button>
+                        </td>
                     </tr>
                     </tbody>
                 </Table>
