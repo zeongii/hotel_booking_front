@@ -31,14 +31,13 @@ let RoomRegister = () => {
         roomContent: '',
         checkIn: '',
         checkOut: '',
-        breakfastPrice: '',
-        File: []
+        breakfastPrice: ''
     });
 
     let navigate = useNavigate();
 
     let moveToNext = (roomId) => {
-        navigate(`/room/roomOne/${roomId}`);
+        navigate(`/room/roomImgInsert/${roomId}`);
     };
 
     let onChange = (e) => {
@@ -53,34 +52,21 @@ let RoomRegister = () => {
         });
     };
 
-    let onEditorChange = (event, editor) => {
-        const data = editor.getData();
-        setInputs({
-            ...inputs,
-            roomContent: data,
-        });
-    };
+
 
     let onSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        for (const key in inputs) {
-            if (key === 'File') {
-                inputs[key].forEach(file => {
-                    formData.append('files', file);
-                });
-            } else {
-                formData.append(key, inputs[key]);
-            }
-        }
+        console.log(inputs)
+
 
         try {
-            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`, formData, {
+            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`,inputs, {
+
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 }
             });
-
+            console.log(resp)
             if (resp.data.roomId !== undefined) {
                 moveToNext(resp.data.roomId);
             }
@@ -145,11 +131,11 @@ let RoomRegister = () => {
                     <tr>
                         <td>내용</td>
                         <td>
-                            <CKEditor
-                                editor={ClassicEditor}
-                                data={inputs.roomContent}
-                                onChange={onEditorChange}
-                            />
+                            <FormControl
+                                type={'text'}
+                                value={inputs.roomContent}
+                                name={'roomContent'}
+                                onChange={onChange} />
                         </td>
                     </tr>
                     <tr>
@@ -182,20 +168,7 @@ let RoomRegister = () => {
                                 onChange={onChange} />
                         </td>
                     </tr>
-                    <tr>
-                        <td>파일</td>
-                        <td>
-                            <FormControl
-                                type={'file'}
-                                name={'File'} multiple
-                                onChange={(e) => {
-                                    setInputs({
-                                        ...inputs,
-                                        File: Array.from(e.target.files)
-                                    });
-                                }} />
-                        </td>
-                    </tr>
+
                     <tr>
                         <td colSpan={2} className={'text-center'}>
                             <Button type={'submit'}>

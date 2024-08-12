@@ -13,6 +13,7 @@ let HotelOne = () => {
 
     let params=useParams()
     let id= parseInt(params.id)
+
     let [data,setData]=useState({roomList:[]})
     let [roomType,setRoomType] = useState([])
 
