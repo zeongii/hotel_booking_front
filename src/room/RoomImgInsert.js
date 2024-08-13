@@ -5,15 +5,15 @@ import {Button, Container} from "react-bootstrap";
 
 let RoomImgInsert = () => {
     let params = useParams();
-    let id = parseInt(params.id);
-
+    let id = parseInt(params.id)
+    console.log(id)
     let [file, setFile] = useState(null); // File state
     let [filePreviews, setFilePreviews] = useState([]); // To store file previews
 
     let navigate = useNavigate()
 
-    let moveToNext  = (roomId) => {
-        navigate('/room/roomOne/' + roomId)
+    let moveToNext  = (id) => {
+        navigate('/room/roomOne/' + id)
     }
 
 
@@ -26,22 +26,22 @@ let RoomImgInsert = () => {
         setFilePreviews(previews);
     };
 
-    function Send(roomId, files) {
-        console.log('Sending files with id:', roomId);
+    function Send(id, files) {
+        console.log('Sending files with id:', id);
         console.log('Files:', files);
 
         const formData = new FormData();
         Array.from(files).forEach((fileItem) => formData.append("file", fileItem));
 
-        formData.append("id", roomId);
+        formData.append("id", id);
         console.log('id:', id);
         console.log('fd:', formData);
-        axios.post('http://localhost:8080/room/imgInsert/' + roomId, formData, {
+        axios.post('http://localhost:8080/room/imgInsert/' + id, formData, {
             baseURL: 'http://localhost:8080'
         })
             .then((response) => {
                 console.log('Response:', response.data);
-                moveToNext()
+                moveToNext(id)
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -73,7 +73,7 @@ let RoomImgInsert = () => {
                 <div className="text-center mt-3">
                     <Button
                         onClick={() => id && file && Send(id, file)}
-                        disabled={!id || !file}
+
                     >
                         Send
                     </Button>

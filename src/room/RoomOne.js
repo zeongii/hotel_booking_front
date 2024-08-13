@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {Button, Container, Table} from "react-bootstrap";
+import {Button, Carousel, Container, Nav, Navbar, Row, Table} from "react-bootstrap";
 
 
 let RoomOne = () => {
@@ -10,11 +10,22 @@ let RoomOne = () => {
     let params = useParams()
     let roomId = parseInt(params.roomId)
 
+    let [fileData, setFileData] = useState([])
+    const [index, setIndex] = useState(0)
+
+    const handleSelect = (selectedIndex) => {
+        setIndex(selectedIndex)
+    }
+
     let nevigate = useNavigate()
 
-    let goBack=()=>{
+
+    // 나중에 호텔 아이디 받아오면 수정필요한 부분
+    let goBack = () => {
         nevigate(-1)
     }
+
+
     let onUpdate = () => {
         nevigate('/room/roomUpdate/' + roomId)
     }
@@ -22,12 +33,17 @@ let RoomOne = () => {
     useEffect(() => {
         let selectOne = async () => {
             try {
-                let resp = await axios.get('http://localhost:8080/room/showOne/'+roomId, {
+                let resp = await axios.get('http://localhost:8080/room/showOne/' + roomId, {
                     withCredentials: true
                 })
-                console.log(resp.data)
+                console.log(resp)
                 setData(resp.data.roomDto)
                 setRoomType(resp.data.roomTypeList)
+                let temp = resp.data.roomFileDtoList
+                console.log("temp")
+                console.log(temp)
+                setFileData(resp.data.roomFileDtoList)
+                console.log(fileData)
             } catch (e) {
                 console.log(e)
             }
@@ -52,52 +68,85 @@ let RoomOne = () => {
 
     return (
         <Container>
-            {/*xs md lg 는 화면의 너비에 따라서 이런식으로 나뉠때 col-6이 적용되게 만듬*/}
-            <Table striped bordered hover>
-                <thead>
-                <tr>
-                    <td>
-                        <h1>방 이름: {data.roomName}</h1>
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    {roomType.map(r => (
-                        data.roomTypeId === r.id ?
-                            (<td key={r.id}>방 타입: {r.typeName}</td>) : null
+            <Row className={'justify-content-center'}>
+                <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container">
+
+                    {fileData.map((file) => (
+                        <Carousel.Item key={file.storedFileName}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%' // 높이 조정 필요
+                            }}>
+                                <img
+                                    src={`http://localhost:8080/room/${file.storedFileName}`}
+                                    alt={file.originalFileName}
+                                    style={{width: '600px', height: 'auto', alignItems: "center"}}
+
+                                />
+                            </div>
+                        </Carousel.Item>
                     ))}
-                </tr>
-                <tr>
-                    <td colSpan={2}>방 설명: {data.roomContent}</td>
-                </tr>
-                <tr>
-                    <td colSpan={2}>조식 가격: {data.breakfastPrice}</td>
-                </tr>
-                <tr>
-                <td>작성일: {data.createdTime}</td>
-                    <td>수정일: {data.updatedTime}</td>
-                </tr>
 
-                <tr>
-                    <td>
-                        <Button onClick={onUpdate}>수정하기</Button>
-                    </td>
-                    <td>
-                        <Button onClick={onDelete}> 삭제하기</Button>
-                    </td>
-                </tr>
+                </Carousel>
+                <Navbar expand="lg" className="bg-body-tertiary" >
+                    <Container className=".nav-container">
+                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link href="#home">Home</Nav.Link>
+                                <Nav.Link href="#link">Link</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
 
-                <tr>
-                    <td colSpan={2} className={"text-center"}>
-                        <Button onClick={goBack}>뒤로 가기</Button>
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <td>
+                            <h1>방 이름: {data.roomName}</h1>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {roomType.map(r => (
+                            data.roomTypeId === r.id ?
+                                (<td key={r.id}>방 타입: {r.typeName}</td>) : null
+                        ))}
+                    </tr>
+                    <tr>
+                        <td colSpan={2}>방 설명: {data.roomContent}</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}>조식 가격: {data.breakfastPrice}</td>
+                    </tr>
+                    <tr>
+                        <td>작성일: {data.createdTime}</td>
+                        <td>수정일: {data.updatedTime}</td>
+                    </tr>
 
-                    </td>
-                </tr>
-                </tbody>
+                    <tr>
+                        <td>
+                            <Button onClick={onUpdate}>수정하기</Button>
+                        </td>
+                        <td>
+                            <Button onClick={onDelete}> 삭제하기</Button>
+                        </td>
+                    </tr>
 
-            </Table>
+                    <tr>
+                        <td colSpan={2} className={"text-center"}>
+                            <Button onClick={goBack}>뒤로 가기</Button>
 
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </Table>
+            </Row>
         </Container>
     )
 
