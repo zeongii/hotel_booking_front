@@ -29,8 +29,8 @@ let RoomRegister = () => {
         roomMax: '',
         roomPrice: '',
         roomContent: '',
-        checkIn: '',
-        checkOut: '',
+        /*checkIn: '',
+        checkOut: '',*/
         breakfastPrice: ''
     });
 
@@ -148,7 +148,7 @@ let RoomRegister = () => {
                                 onChange={onChange} />
                         </td>
                     </tr>
-                    <tr>
+                    {/*<tr>
                         <td>체크인</td>
                         <td>
                             <FormControl
@@ -167,7 +167,7 @@ let RoomRegister = () => {
                                 name={'checkOut'}
                                 onChange={onChange} />
                         </td>
-                    </tr>
+                    </tr>*/}
 
                     <tr>
                         <td colSpan={2} className={'text-center'}>

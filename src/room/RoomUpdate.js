@@ -29,8 +29,8 @@ let RoomUpdate= () => {
         roomMax: '',
         roomPrice: '',
         roomContent: '',
-        checkIn: '',
-        checkOut: '',
+        /*checkIn: '',
+        checkOut: '',*/
         breakfastPrice: ''
     })
 
@@ -141,7 +141,7 @@ let RoomUpdate= () => {
                                     onChange={onChange}/>
                             </td>
                         </tr>
-                        <tr>
+                       {/* <tr>
                             <td>체크인</td>
                             <td>
                                 <FormControl
@@ -160,7 +160,7 @@ let RoomUpdate= () => {
                                     name={'checkOut'}
                                     onChange={onChange}/>
                             </td>
-                        </tr>
+                        </tr>*/}
                         <tr>
                             <td colSpan={2} className={'text-center'}>
                                 <Button type={'submit'}>

@@ -30,6 +30,10 @@ let RoomOne = () => {
         nevigate('/room/roomUpdate/' + roomId)
     }
 
+    let onReservation = (roomId) => {
+        nevigate('/reservation/roomReservation/'+ roomId)
+    }
+
     useEffect(() => {
         let selectOne = async () => {
             try {
@@ -105,7 +109,7 @@ let RoomOne = () => {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <td>
+                        <td colSpan={3}>
                             <h1>방 이름: {data.roomName}</h1>
                         </td>
                     </tr>
@@ -114,14 +118,14 @@ let RoomOne = () => {
                     <tr>
                         {roomType.map(r => (
                             data.roomTypeId === r.id ?
-                                (<td key={r.id}>방 타입: {r.typeName}</td>) : null
+                                (<td key={r.id} colSpan={3}>방 타입: {r.typeName}</td>) : null
                         ))}
                     </tr>
                     <tr>
-                        <td colSpan={2}>방 설명: {data.roomContent}</td>
+                        <td colSpan={3}>방 설명: {data.roomContent}</td>
                     </tr>
                     <tr>
-                        <td colSpan={2}>조식 가격: {data.breakfastPrice}</td>
+                        <td colSpan={3}>조식 가격: {data.breakfastPrice}</td>
                     </tr>
                     <tr>
                         <td>작성일: {data.createdTime}</td>
@@ -134,6 +138,9 @@ let RoomOne = () => {
                         </td>
                         <td>
                             <Button onClick={onDelete}> 삭제하기</Button>
+                        </td>
+                        <td>
+                            <Button onClick={onReservation}>예약하기</Button>
                         </td>
                     </tr>
 

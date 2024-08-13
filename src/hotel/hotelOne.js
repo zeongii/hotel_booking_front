@@ -47,13 +47,12 @@ let HotelOne = () => {
 
         roomSelectList()
     },[id])
+
+
     let TableRow= ({room, moveToSingle})=> {
         return(
-            <tr onClick={()=> moveToSingle(room.id)}>
-
-
+            <tr>
                 <td>
-                    {/*{room.id}*/}
                     <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
 
                         {room.imageList.map((roomImages) => (
@@ -75,15 +74,13 @@ let HotelOne = () => {
                         ))}
 
                     </Carousel>
-
-
                 </td>
                 {roomType.map(r=>(
                     room.roomTypeId === r.id ?
-                        (<td key={r.id}> 방 타입: {r.typeName}</td>) :null
+                        (<td  onClick={()=> moveToSingle(room.id)} key={r.id}> 방 타입: {r.typeName}</td>) :null
                 ))}
 
-                <td>{room.roomPrice}</td>
+                <td  onClick={()=> moveToSingle(room.id)}>{room.roomPrice}</td>
             </tr>
         )
     }
@@ -103,6 +100,7 @@ let HotelOne = () => {
                 </tr>
                 </thead>
                 <tbody>
+
                 {data.roomList.map(r => (
                     <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>
                 ))}

@@ -11,6 +11,7 @@ import HotelList from "./hotel/HotelList";
 import RoomOne from "./room/RoomOne";
 import RoomUpdate from "./room/RoomUpdate";
 import RoomImgInsert from "./room/RoomImgInsert";
+import RoomReservation from "./reservation/RoomReservation";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/room/roomImgInsert/:id" element={<RoomImgInsert/>}/>
                 <Route path="/room/roomOne/:roomId" element={<RoomOne/>}/>
                 <Route path="/room/roomUpdate/:roomId" element={<RoomUpdate/>}/>
+                <Route path="/reservation/roomReservation/:roomId" element={<RoomReservation/>}/>
             </Routes>
         </div>
     );
