@@ -1,5 +1,5 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {Button, Container, Table} from "react-bootstrap";
+import {Button, Carousel, Container, Table} from "react-bootstrap";
 import data from "bootstrap/js/src/dom/data";
 import {useEffect, useState} from "react";
 import axios from "axios";
@@ -13,6 +13,12 @@ let HotelOne = () => {
 
     let params=useParams()
     let id= parseInt(params.id)
+    
+    
+    const [roomIndex, setRoomIndex]=useState(0)
+    const handleSelect = (selectedIndex) => {
+        setRoomIndex(selectedIndex)
+    }
 
     let [data,setData]=useState({roomList:[]})
     let [roomType,setRoomType] = useState([])
@@ -44,7 +50,34 @@ let HotelOne = () => {
     let TableRow= ({room, moveToSingle})=> {
         return(
             <tr onClick={()=> moveToSingle(room.id)}>
-                <td>{room.id} </td>
+
+
+                <td>
+                    {/*{room.id}*/}
+                    <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
+
+                        {room.imageList.map((roomImages) => (
+                            <Carousel.Item key={roomImages}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%' // 높이 조정 필요
+                                }}>
+                                    <img
+                                        src={`http://localhost:8080/room/${roomImages}`}
+                                        alt={roomImages}
+                                        style={{width: '600px', height: 'auto', alignItems: "center"}}
+
+                                    />
+                                </div>
+                            </Carousel.Item>
+                        ))}
+
+                    </Carousel>
+
+
+                </td>
                 {roomType.map(r=>(
                     room.roomTypeId === r.id ?
                         (<td key={r.id}> 방 타입: {r.typeName}</td>) :null
