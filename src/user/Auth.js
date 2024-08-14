@@ -18,9 +18,11 @@ let Auth = () => {
     };
 
     let navigate = useNavigate()
+
     let onRegister = () => {
         navigate('/user/register')
     }
+
     let onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();

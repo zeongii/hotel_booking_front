@@ -12,6 +12,7 @@ import RoomOne from "./room/RoomOne";
 import RoomUpdate from "./room/RoomUpdate";
 import RoomImgInsert from "./room/RoomImgInsert";
 import RoomReservation from "./reservation/RoomReservation";
+import ReservationOne from "./reservation/ReservationOne";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/room/roomOne/:roomId" element={<RoomOne/>}/>
                 <Route path="/room/roomUpdate/:roomId" element={<RoomUpdate/>}/>
                 <Route path="/reservation/roomReservation/:roomId" element={<RoomReservation/>}/>
+                <Route path="/reservation/roomReservationOne/:reservationId" element={<ReservationOne/>}/>
             </Routes>
         </div>
     );

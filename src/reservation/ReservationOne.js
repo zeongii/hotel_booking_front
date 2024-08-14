@@ -2,80 +2,60 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {Button, Carousel, Container, Nav, Navbar, Row, Table} from "react-bootstrap";
+/*resultMap.put("reservationDto", reservationDto);
+resultMap.put("roomDto",roomDto);
+resultMap.put("roomTypeList", ROOM_TYPE_SERVICE.selectAll());
+resultMap.put("roomFileDtoList",roomFileDtoList);*/
 
-
-let RoomOne = () => {
-    let [data, setData] = useState({})
-    let [roomType, setRoomType] = useState([])
+let ReservationOne = () => {
+    let [data, setData] = useState({})//roomDto
+    let [roomType, setRoomType] = useState([]) //roomTypeList
+    let [reservationOne, setReservationOne] = useState({})
     let params = useParams()
-    let roomId = parseInt(params.roomId)
+    let reservationId = parseInt(params.reservationId)
 
-    let [fileData, setFileData] = useState([])
-    const [index, setIndex] = useState(0)
+    let [fileData, setFileData] = useState([]) // 룸 파일 리스트
+    const [roomIndex, setRoomIndex] = useState(0)
 
     const handleSelect = (selectedIndex) => {
-        setIndex(selectedIndex)
+        setRoomIndex(selectedIndex)
     }
 
     let nevigate = useNavigate()
 
-
-    // 나중에 호텔 아이디 받아오면 수정필요한 부분
-    let goBack = () => {
-        nevigate(-1)
+    let onCancled = () => {
+        // 나중에 호텔 검색 페이지로 넘겨야함
+        nevigate('/hotel/hoteOne/1')
     }
 
-
-    let onUpdate = () => {
-        nevigate('/room/roomUpdate/' + roomId)
-    }
-
-    let moveToReservation = () => {
-        nevigate(`/reservation/roomReservation/`+roomId)
-    }
+    let message = reservationOne.isBreakfast === 1 ? "조식 포함" : "조식 미포함";
 
     useEffect(() => {
         let selectOne = async () => {
             try {
-                let resp = await axios.get('http://localhost:8080/room/showOne/' + roomId, {
+                let resp = await axios.get('http://localhost:8080/reservation/showOne/' + reservationId, {
                     withCredentials: true
                 })
-                console.log(resp)
+                // 셀렉트 원에서 보낼 애들 확인해서 맞춰주기
                 setData(resp.data.roomDto)
                 setRoomType(resp.data.roomTypeList)
-                let temp = resp.data.roomFileDtoList
-                console.log("temp")
-                console.log(temp)
                 setFileData(resp.data.roomFileDtoList)
-                console.log(fileData)
+                setReservationOne(resp.data.reservationDto)
+
+
             } catch (e) {
                 console.log(e)
+
             }
         }
         selectOne()
     }, [])
 
-    let onDelete = async () => {
-        let resp = await axios.get('http://localhost:8080/room/delete/' + roomId, {
-            withCredentials: true
-        })
-
-        if (resp.status === 200) {
-            // 이부분 에서도 호텔 아이디 값으로 반환 필요
-            nevigate('/hotel/hotelOne/1')
-        }
-
-    }
-
-    console.log(data)
-
-
     return (
         <Container>
             <Row className={'justify-content-center'}>
-                <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container">
-
-                    {fileData.map((file) => (
+                <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
+                    {fileData.map((file)=> (
                         <Carousel.Item key={file.storedFileName}>
                             <div style={{
                                 display: 'flex',
@@ -92,7 +72,6 @@ let RoomOne = () => {
                             </div>
                         </Carousel.Item>
                     ))}
-
                 </Carousel>
                 <Navbar expand="lg" className="bg-body-tertiary" >
                     <Container className=".nav-container">
@@ -109,7 +88,7 @@ let RoomOne = () => {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <td colSpan={3}>
+                        <td>
                             <h1>방 이름: {data.roomName}</h1>
                         </td>
                     </tr>
@@ -128,35 +107,28 @@ let RoomOne = () => {
                         <td colSpan={3}>조식 가격: {data.breakfastPrice}</td>
                     </tr>
                     <tr>
-                        <td>작성일: {data.createdTime}</td>
-                        <td>수정일: {data.updatedTime}</td>
+                        <td colSpan={3}>체크인: {reservationOne.startDate}</td>
                     </tr>
-
                     <tr>
-                        <td>
-                            <Button onClick={onUpdate}>수정하기</Button>
-                        </td>
-                        <td>
-                            <Button onClick={onDelete}> 삭제하기</Button>
-                        </td>
-                        <td>
-                            <Button onClick={moveToReservation}>예약하기</Button>
+                        <td colSpan={3}>체크아웃: {reservationOne.endDate}</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>조식 여부:
+                            {message}
                         </td>
                     </tr>
-
                     <tr>
-                        <td colSpan={2} className={"text-center"}>
-                            <Button onClick={goBack}>뒤로 가기</Button>
-
+                        <td colSpan={3} className={"text-center"}>
+                            <Button onClick={onCancled}>예약 취소</Button>
                         </td>
                     </tr>
                     </tbody>
-
                 </Table>
+
+
             </Row>
         </Container>
     )
-
 }
 
-export default RoomOne
+export default ReservationOne

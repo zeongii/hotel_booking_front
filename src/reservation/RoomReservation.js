@@ -80,13 +80,13 @@ let RoomReservation = () => {
                     </tr>
                     <tr>
                         <td>조식 선택</td>
+                        <td>
                         <FormCheck
                             type={'radio'}
                             label={'예'}
                             value={1}
                             name={'isBreakfast'}
                             onChange={onChange}
-                            checked={inputs.isBreakfast === 1}
                         />
                         <FormCheck
                             type={'radio'}
@@ -94,13 +94,13 @@ let RoomReservation = () => {
                             value={0}
                             name={'isBreakfast'}
                             onChange={onChange}
-                            checked={inputs.isBreakfast === 0}
                         />
+                        </td>
                     </tr>
                     <tr>
                         <td colSpan={2} className={'text-center'}>
                             <Button type={'submit'}>
-                                등록하기
+                                예약하기
                             </Button>
                         </td>
                     </tr>
