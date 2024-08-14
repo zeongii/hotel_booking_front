@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 let Auth = () => {
     let [inputs, setInputs] = useState({
-        username: '',
+        email: '',
         password: ''
     });
 
@@ -17,14 +17,18 @@ let Auth = () => {
         })
     };
 
-    let navigate = useNavigate();
+    let navigate = useNavigate()
+
+    let onRegister = () => {
+        navigate('/user/register')
+    }
 
     let onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
-        formData.append('username', inputs.username);
+        formData.append('email', inputs.email);
         formData.append('password', inputs.password);
-        console.log(formData);
+        console.log(inputs)
 
         let response = await axios({
             url: 'http://localhost:8080/user/auth',
@@ -39,21 +43,12 @@ let Auth = () => {
                 nickname: response.data.nickname,
                 role: response.data.role
             }
-            navigate('/hotel/showList', {state: {userInfo}});
+            navigate('/hotel/hotelAll', {state: {userInfo:userInfo}});
         }
-    }
-
-    let onClick = async (e) => {
-        e.preventDefault();
-
-        let response = await axios({
-            url: 'http://localhost:8080/'
-        })
     }
 
     return (
         <Container>
-            <button onClick={onClick}>클릭하면 호텔 리스트</button>
             <form onSubmit={onSubmit}>
                 <Table striped hover bordered>
                     <thead>
@@ -65,9 +60,9 @@ let Auth = () => {
                     <tr>
                         <td>아이디</td>
                         <td><FormControl
-                            type={'text'}
-                            name={'username'}
-                            value={inputs.username}
+                            type={'email'}
+                            name={'email'}
+                            value={inputs.email}
                             onChange={onChange}/>
                         </td>
                     </tr>
@@ -81,14 +76,11 @@ let Auth = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={2}>
+                        <td>
                             <Button type={'submit'}>로그인</Button>
                         </td>
                         <td>
-                            <Button>아이디 찾기</Button>
-                        </td>
-                        <td>
-                            <Button>비밀번호 찾기</Button>
+                            <Button onClick={onRegister}>회원가입</Button>
                         </td>
                     </tr>
                     </tbody>
