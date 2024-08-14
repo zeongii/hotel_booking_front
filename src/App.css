@@ -37,6 +37,9 @@
 .custom-file-input {
   width: 600px;  /* 원하는 너비로 조정 */
 }
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -45,3 +48,5 @@
     transform: rotate(360deg);
   }
 }
+
+

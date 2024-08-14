@@ -83,7 +83,7 @@ let HotelInsert = () => {
         }
         console.log(valueMap)
         try {
-            let resp = await axios.post('http://localhost:8080/hotel/update' + id, valueMap)
+            let resp = await axios.post('http://localhost:8080/hotel/update', valueMap)
             console.log(selectedFacilities)
             let id = resp.data.resultId; // 서버 응답에서 id 추출
             moveToNext(id)
@@ -194,7 +194,7 @@ let HotelInsert = () => {
 
                         <tr className="text-center">
                             <td>
-                                <Button type={'submit'}>수정하기</Button>
+                                <Button type={'submit'}>작성하기</Button>
                             </td>
                         </tr>
                         </tbody>

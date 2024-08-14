@@ -1,219 +1,170 @@
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {Button, Carousel, Container, Table} from "react-bootstrap";
-import { Map } from "react-kakao-maps-sdk";
-import {useEffect, useState} from "react";
+import React, {useRef, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import axios from "axios";
+import Map from './Map';
+import travelingImage from "./traveling.png";
 
-let HotelOne = () => {
-
-    let location = useLocation()
-    let nevigate = useNavigate()
-
-    let params = useParams()
-    let id = parseInt(params.id)
-
-    console.log(id)
+const HotelOne = () => {
+    const navigate = useNavigate();
+    const params = useParams();
+    const id = parseInt(params.id);
 
     const facility = [
-        {id: 1, label: '야외수영장'},
-        {id: 2, label: '실내수영장'},
-        {id: 3, label: '사우나'},
-        {id: 4, label: '키즈룸'},
-        {id: 5, label: '카지노'},
-        {id: 6, label: '피트니스센터'},
-        {id: 7, label: '무료와이파이'},
-        {id: 8, label: '세탁시설'},
-        {id: 9, label: '스파'},
-        {id: 10, label: '24시간 프론트 데스크'},
-        {id: 11, label: '레스토랑'},
-        {id: 12, label: '무료주차'},
-        {id: 13, label: '바'},
-        {id: 14, label: 'ATM'},
-        {id: 15, label: '야외정원'}
+        {id: 1, label: '️🏊‍♀️야외수영장'},
+        {id: 2, label: '🤿실내수영장'},
+        {id: 3, label: '♨️사우나'},
+        {id: 4, label: '👨‍👩‍👧‍👦키즈룸'},
+        {id: 5, label: '🎰카지노'},
+        {id: 6, label: '🏋️피트니스센터'},
+        {id: 7, label: '🛜무료와이파이'},
+        {id: 8, label: '🫧️세탁시설'},
+        {id: 9, label: '🛁스파'},
+        {id: 10, label: '🛎️24시간 프론트 데스크'},
+        {id: 11, label: '🥗레스토랑'},
+        {id: 12, label: '🚗무료주차'},
+        {id: 13, label: '🍸바'},
+        {id: 14, label: '🏧ATM'},
+        {id: 15, label: '🌴야외정원'}
     ];
 
+    const [roomIndex, setRoomIndex] = useState(0);
+    const [index, setIndex] = useState(0);
+    const [hotelData, setHotelData] = useState({});
 
 
-
-    const [roomIndex, setRoomIndex] = useState(0)
-    const handleSelect = (selectedIndex) => {
-        setRoomIndex(selectedIndex)
-    }
-
-    const [index, setIndex] = useState(0)
-
-    const handleHotelSelect = (selectedIndex) => {
-        setIndex(selectedIndex)
-    }
-
-    let [hotelData, setHotelData] = useState({})
-
-    let [facilities, setFacilities] = useState([])
-
-    let [fileData, setFileData] = useState([])
+    const [facilities, setFacilities] = useState([]);
+    const [fileData, setFileData] = useState([]);
+    const [roomdata, setRoomdata] = useState({roomList: []});
+    const [roomType, setRoomType] = useState([]);
 
 
-    let [roomdata, setRoomdata] = useState({roomList: []})
-    let [roomType, setRoomType] = useState([])
+    const handleSelect = (selectedIndex) => setRoomIndex(selectedIndex);
+    const handleHotelSelect = (selectedIndex) => setIndex(selectedIndex);
 
-    let roomInsert = (hotelId) => {
-        nevigate(`/room/register/` + hotelId)
-    }
-    let moveToSingle = (roomId) => {
-        nevigate('/room/roomOne/' + roomId)
-    }
-
-    let onDelete = async () => {
-        let resp = await axios.get('http://localhost:8080/hotel/delete/' + id, {})
+    const roomInsert = (hotelId) => navigate(`/room/register/${hotelId}`);
+    const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`);
+    const onDelete = async () => {
+        const resp = await axios.get(`http://localhost:8080/hotel/delete/${id}`);
         if (resp.status === 200) {
-            nevigate('/hotelAll')
+            navigate('/hotelAll');
         }
-
-    }
-
+    };
 
     useEffect(() => {
-        let HotelOne = async () => {
-            let resp = await axios.get('http://localhost:8080/hotel/hotelOne/' + id, {})
-            console.log(resp)
-
-            setHotelData(resp.data.hotelDto)
-            setFileData(resp.data.hotelFileDtoList)
-            setFacilities(resp.data.facilities)
-
-            console.log(resp.data.facilities)
-
-
-        }
-        HotelOne()
-    }, [])
-
+        const fetchHotelData = async () => {
+            const resp = await axios.get(`http://localhost:8080/hotel/hotelOne/${id}`);
+            setHotelData(resp.data.hotelDto);
+            setFileData(resp.data.hotelFileDtoList);
+            setFacilities(resp.data.facilities);
+        };
+        fetchHotelData();
+    }, [id]);
 
     useEffect(() => {
-        let roomSelectList = async () => {
+        const fetchRoomData = async () => {
             try {
-                let resp = await axios.get("http://localhost:8080/room/showList/" + id, {
-                    withCredentials: true
-                })
+                const resp = await axios.get(`http://localhost:8080/room/showList/${id}`);
                 if (resp.status === 200) {
-                    setRoomdata(resp.data)
-                    setRoomType(resp.data.roomTypeList)
+                    setRoomdata(resp.data);
+                    setRoomType(resp.data.roomTypeList);
                 }
             } catch (e) {
-                console.log(e)
+                console.error(e);
             }
-        }
+        };
+        fetchRoomData();
+    }, [id]);
 
-        roomSelectList()
-    }, [id])
-    let TableRow = ({room, moveToSingle}) => {
-        return (
-            <tr onClick={() => moveToSingle(room.id)}>
-
-
-                <td>
-                    <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
-
-                        {room.imageList.map((roomImages) => (
-                            <Carousel.Item key={roomImages}>
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    height: '100%' // 높이 조정 필요
-                                }}>
-                                    <img
-                                        src={`http://localhost:8080/room/${roomImages}`}
-                                        alt={roomImages}
-                                        style={{width: '600px', height: 'auto', alignItems: "center"}}
-
-                                    />
-                                </div>
-                            </Carousel.Item>
-                        ))}
-
-                    </Carousel>
-                </td>
-                {roomType.map(r => (
-                    room.roomTypeId === r.id ?
-                        (<td key={r.id}> 방 타입: {r.typeName}</td>) : null
-                ))}
-
-                <td  onClick={()=> moveToSingle(room.id)}>{room.roomPrice}</td>
-            </tr>
-        )
-    }
 
     return (
-
-
-
-
-
         <Container className={"mt-3"}>
-            <h1>호텔id가 {id}인 호텔의 상세 페이지 입니다.</h1>
             <Carousel activeIndex={index} onSelect={handleHotelSelect} className="carousel-container">
-
                 {fileData.map((file) => (
                     <Carousel.Item key={file.storedFileName}>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '100%' // 높이 조정 필요
-                        }}>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                             <img
                                 src={`http://localhost:8080/hotel/${file.storedFileName}`}
                                 alt={file.originalFileName}
-                                style={{width: '600px', height: 'auto', alignItems: "center"}}
-
+                                style={{width: '600px', height: 'auto'}}
                             />
                         </div>
                     </Carousel.Item>
                 ))}
-
-
             </Carousel>
-
-
-            <Button onClick={onDelete}>호텔삭제</Button>
-            <Button onClick={roomInsert}>방 등록하기</Button>
-
-
-
+            <h1>{hotelData.hotelName}</h1>
             {facilities.map(f => (
-                <div>{facility[f - 1].label}</div>
+                <div key={f}>{facility[f - 1].label}</div>
             ))}
 
 
-            <Map
-                center={{ lat: 33.450701, lng: 126.570667 }}
-                style={{ width: '1000px', height: '600px' }}
-                level={3}
-            />
+            {/*<Map address={hotelData.address}/>
+                    맵 고장남 하나만 뜨고 있음*/}
 
-            <Table hover striped bordered className={"table-danger"}>
-                <thead>
-                <tr>
-                    <td>방 사진</td>
-                    <td>방 타입</td>
-                    <td>가격</td>
-                </tr>
-                </thead>
-                <tbody>
+            <div style={styles.cardContainer}>
                 {roomdata.roomList.map(r => (
-                        <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>
-                    )
-                )}
+                    <Card style={{width: '18rem'}}>
+                        <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
+                            {r.imageList.length > 0 ? (
+                                r.imageList.map((roomImages) => (
+                                    <Carousel.Item key={roomImages}>
+                                        <div style={styles.imageContainer}>
+                                            <Card.Img
+                                                src={`http://localhost:8080/room/${roomImages}`}
+                                                alt={roomImages}
+                                                style={styles.image}
+                                            />
+                                        </div>
+                                    </Carousel.Item>
+                                ))
+                            ) : (
+                                <div style={styles.imageContainer}>
+                                    <Card.Img
+                                        src={travelingImage}
+                                        alt="기본 이미지"
+                                        style={styles.image}
+                                    />
+                                </div>
+                            )}
+                        </Carousel>
 
-                </tbody>
-            </Table>
-
+                        <Card.Body onClick={() => moveToSingle(r.id)}>
+                            <Card.Title>{roomType.map(r => (
+                                r.roomTypeId === r.id ? <td key={r.id}> 방 타입: {r.typeName}</td> : null
+                            ))}</Card.Title>
+                            <Card.Text>
+                                {r.roomPrice}
+                            </Card.Text>
+                            <Button variant="primary">예약하러 가기</Button>
+                        </Card.Body>
+                    </Card>
+                ))}
+            </div>
         </Container>
+    );
+};
 
-
-    )
-}
-
+const styles = {
+    cardContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1rem',
+        justifyContent: 'space-between',
+    },
+    card: {
+        width: '15rem',
+        boxSizing: 'border-box',
+    },
+    imageContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '300px', // 적절한 높이 설정
+    },
+    image: {
+        width: '100%',
+        height: '300px',
+    },
+};
 
 export default HotelOne;

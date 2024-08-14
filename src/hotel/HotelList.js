@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
+import travelingImage from './traveling.png';
 
 let HotelList = () => {
 
@@ -42,95 +43,72 @@ let HotelList = () => {
         showHotelList()
     }, [])
 
-
-
     return (
-
-
         <Container className={"mt-3"}>
-            <Button onClick={moveInsert}>호텔 작성하기</Button>
-
-            <Table hover striped bordered className={"table-danger"}>
-                <thead>
-                <tr>
-                    <td>호텔 사진</td>
-                    <td>호텔 번호</td>
-                    <td>호텔 이름</td>
-                    <td>호텔 주소</td>
-                </tr>
-                </thead>
-                <tbody>
+            <div style={styles.cardContainer}>
                 {data.hotelList.map((h) => (
-                    <TableRow h={h} key={h.id} moveHotelOne={moveHotelOne}/>
+                    <Card style={{width: '18rem'}}>
+                        <Carousel activeIndex={hotelIndex} onSelect={handleSelect} className="carousel-container">
+                            {h.imageList.length > 0 ? (
+                                h.imageList.map((hotelImages, imgIndex) => (
+                                    <Carousel.Item key={imgIndex}>
+                                        <div style={styles.imageContainer}>
+                                            <Card.Img
+                                                src={`http://localhost:8080/hotel/${hotelImages}`}
+                                                alt={hotelImages}
+                                                style={styles.image}
+                                            />
+                                        </div>
+                                    </Carousel.Item>
+                                ))
+                            ) : (
+                                    <div style={styles.imageContainer}>
+                                        <Card.Img
+                                            src={travelingImage}
+                                            alt="기본 이미지"
+                                            style={styles.image}
+                                        />
+                                    </div>
+                            )}
+                        </Carousel>
+
+                        <Card.Body onClick={() => moveHotelOne(h.id)}>
+                            <Card.Title>{h.hotelName}</Card.Title>
+                            <Card.Text>
+                                호텔 정보 넣기
+                            </Card.Text>
+                            <Button variant="primary">예약하러 가기</Button>
+                        </Card.Body>
+                    </Card>
                 ))}
-
-
-
-                </tbody>
-            </Table>
-{/*
-            <Card style={{ width: '18rem' }}>
-                {h.imageList.map((hotelImages) => (
-                <Carousel.Item key={hotelImages}>
-                <Card.Img
-                    src={`http://localhost:8080/hotel/${hotelImages}`}
-                    alt={hotelImages}
-                    style={{width: '600px', height: 'auto', alignItems: "center"}}
-
-                />
-                </Carousel.Item>
-                ))}
-
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-            </Card>*/}
-
+            </div>
         </Container>
-
-
-    )
-
-    let TableRow = ({h, moveHotelOne}) => {
-        return (
-            <tr>
-                <td>
-                    <Carousel activeIndex={hotelIndex} onSelect={handleSelect} className="carousel-container">
-
-                        {h.imageList.map((hotelImages) => (
-                            <Carousel.Item key={hotelImages}>
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    height: '100%' // 높이 조정 필요
-                                }}>
-                                    <img
-                                        src={`http://localhost:8080/hotel/${hotelImages}`}
-                                        alt={hotelImages}
-                                        style={{width: '600px', height: 'auto', alignItems: "center"}}
-
-                                    />
-                                </div>
-                            </Carousel.Item>
-                        ))}
-
-                    </Carousel>
-                </td>
-                <td onClick={() => moveHotelOne(h.id)}>{h.id}</td>
-                <td onClick={() => moveHotelOne(h.id)}>{h.hotelName}</td>
-                <td onClick={() => moveHotelOne(h.id)}>{h.hotelAddress}</td>
-            </tr>
-
-        )
-    }
+)
 
 }
+const styles = {
+    cardContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1rem',
+        justifyContent: 'space-between',
+    },
+    card: {
+        width: '18rem',
+        flex: '1 1 calc(33.333% - 1rem)', // 한 줄에 3개 배치
+        boxSizing: 'border-box',
+    },
+    imageContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '300px', // 적절한 높이 설정
+    },
+    image: {
+        width: '100%',
+        height: '300px',
+    },
+};
 
 
 export default HotelList
