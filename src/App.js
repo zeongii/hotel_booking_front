@@ -1,8 +1,5 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom";
-// import HotelOne from "./board/HotelOne";
-// import Write from "./board/Write";
-// import Update from "./board/Update";
 import Auth from "./user/Auth";
 import HotelOne from "./hotel/hotelOne";
 import Register from "./user/Register";
@@ -14,7 +11,6 @@ import RoomImgInsert from "./room/RoomImgInsert";
 import NotFound from "./NotFound";
 import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelInsert from "./hotel/HotelInsert";
-import HotelShowOne from "./hotel/HotelShowOne";
 
 function App() {
     return (

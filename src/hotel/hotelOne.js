@@ -10,7 +10,27 @@ let HotelOne = () => {
     let nevigate = useNavigate()
 
     let params = useParams()
-    let id = parseInt(params.id) // hotelId
+    let id = parseInt(params.id)
+
+    console.log(id)
+
+    const facility = [
+        {id: 1, label: '야외수영장'},
+        {id: 2, label: '실내수영장'},
+        {id: 3, label: '사우나'},
+        {id: 4, label: '키즈룸'},
+        {id: 5, label: '카지노'},
+        {id: 6, label: '피트니스센터'},
+        {id: 7, label: '무료와이파이'},
+        {id: 8, label: '세탁시설'},
+        {id: 9, label: '스파'},
+        {id: 10, label: '24시간 프론트 데스크'},
+        {id: 11, label: '레스토랑'},
+        {id: 12, label: '무료주차'},
+        {id: 13, label: '바'},
+        {id: 14, label: 'ATM'},
+        {id: 15, label: '야외정원'}
+    ];
 
 
     const [roomIndex, setRoomIndex] = useState(0)
@@ -26,6 +46,8 @@ let HotelOne = () => {
 
     let [hotelData, setHotelData] = useState({})
 
+    let [facilities, setFacilities] = useState([])
+
     let [fileData, setFileData] = useState([])
 
 
@@ -39,12 +61,25 @@ let HotelOne = () => {
         nevigate('/room/roomOne/' + roomId)
     }
 
+    let onDelete = async () => {
+        let resp = await axios.get('http://localhost:8080/hotel/delete/' + id, {})
+        if (resp.status === 200) {
+            nevigate('/hotelAll')
+        }
+
+    }
+
 
     useEffect(() => {
         let HotelOne = async () => {
             let resp = await axios.get('http://localhost:8080/hotel/hotelOne/' + id, {})
+            console.log(resp)
+
             setHotelData(resp.data.hotelDto)
             setFileData(resp.data.hotelFileDtoList)
+            setFacilities(resp.data.facilities)
+
+            console.log(resp.data.facilities)
 
 
         }
@@ -112,7 +147,7 @@ let HotelOne = () => {
 
     return (
         <Container className={"mt-3"}>
-            <h1>호텔id가 1인 호텔의 상세 페이지 입니다.</h1>
+            <h1>호텔id가 {id}인 호텔의 상세 페이지 입니다.</h1>
             <Carousel activeIndex={index} onSelect={handleHotelSelect} className="carousel-container">
 
                 {fileData.map((file) => (
@@ -133,12 +168,16 @@ let HotelOne = () => {
                     </Carousel.Item>
                 ))}
 
+
             </Carousel>
 
 
-
-
+            <Button onClick={onDelete}>호텔삭제</Button>
             <Button onClick={roomInsert}>방 등록하기</Button>
+
+            {facilities.map(f => (
+                <div>{facility[f - 1].label}</div>
+            ))}
 
             <Table hover striped bordered className={"table-danger"}>
                 <thead>
@@ -150,8 +189,9 @@ let HotelOne = () => {
                 </thead>
                 <tbody>
                 {roomdata.roomList.map(r => (
-                    <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>
-                ))}
+                        <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>
+                    )
+                )}
 
                 </tbody>
             </Table>
