@@ -18,6 +18,8 @@ let HotelOne = () => {
         setRoomIndex(selectedIndex)
     }
 
+    let [hotelData, setHotelData] = useState({})
+
     let [roomdata,setRoomdata]=useState({roomList:[]})
     let [roomType,setRoomType] = useState([])
 
@@ -27,6 +29,11 @@ let HotelOne = () => {
     let moveToSingle = (roomId)=> {
         nevigate('/room/roomOne/'+roomId)
     }
+
+
+
+
+
 
     useEffect(()=> {
         let roomSelectList= async ()=> {
@@ -89,6 +96,13 @@ let HotelOne = () => {
     return (
         <Container className={"mt-3"}>
             <h1>호텔id가 1인 호텔의 상세 페이지 입니다.</h1>
+
+
+
+
+
+
+
 
             <Button onClick={roomInsert}>방 등록하기</Button>
 

@@ -14,6 +14,7 @@ import RoomImgInsert from "./room/RoomImgInsert";
 import NotFound from "./NotFound";
 import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelInsert from "./hotel/HotelInsert";
+import HotelShowOne from "./hotel/HotelShowOne";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/" element={<Auth/>}/>
                 <Route path="/hotelAll" element={<HotelList/>}/>
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
+                <Route path="/hotelShowOne/:id" element={<HotelShowOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>
                 <Route path="*" element={<NotFound/>}/>
