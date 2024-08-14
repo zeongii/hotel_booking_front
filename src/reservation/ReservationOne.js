@@ -17,6 +17,7 @@ let ReservationOne = () => {
     let [fileData, setFileData] = useState([]) // 룸 파일 리스트
     const [roomIndex, setRoomIndex] = useState(0)
 
+
     const handleSelect = (selectedIndex) => {
         setRoomIndex(selectedIndex)
     }
@@ -107,14 +108,28 @@ let ReservationOne = () => {
                         <td colSpan={3}>조식 가격: {data.breakfastPrice}</td>
                     </tr>
                     <tr>
-                        <td colSpan={3}>체크인: {reservationOne.startDate}</td>
+                        <td colSpan={3}>
+                            체크인: {new Date(reservationOne.startDate).toLocaleDateString('ko-KR')}
+                        </td>
                     </tr>
                     <tr>
-                        <td colSpan={3}>체크아웃: {reservationOne.endDate}</td>
+                        <td colSpan={3}>
+                            체크아웃: {new Date(reservationOne.endDate).toLocaleDateString('ko-KR')}
+                        </td>
                     </tr>
                     <tr>
                         <td colSpan={3}>조식 여부:
                             {message}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>가격:
+                            {reservationOne.payPrice}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>예약번호
+                            {reservationOne.reservationNumber}
                         </td>
                     </tr>
                     <tr>
