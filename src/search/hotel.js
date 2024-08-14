@@ -1,20 +1,29 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {Button, Container, Form, Table} from 'react-bootstrap';
+import {Button, Carousel, Container, Form, Table} from 'react-bootstrap';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const SearchHotel = () => {
-    const [searchParams, setSearchParams] = useState({
+    const [hotelArr, setHotelArr] = useState([]);
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState();
+    const [peopleCount, setPeopleCount] = useState(1);
+
+    let [searchParams, setSearchParams] = useState({
         grade: [],
         cityId: [],
         facilityId: [],
         roomTypeId: [],
-        hotelName: ""
+        hotelName: "",
+        startDate: "",
+        endDate: "",
+        peopleCount: peopleCount
     });
-
-    const [results, setResults] = useState([]);
-    const [hotelArr, setHotelArr] = useState([]);
 
     const grades = [
         {id: 1, label: '1성급'},
@@ -86,18 +95,20 @@ const SearchHotel = () => {
     const handleSearch = async (e) => {
         e.preventDefault();
         console.log('잘 받고 있니?:', searchParams);
+
         try {
             const response = await axios.post('http://localhost:8080/search/hotel', searchParams);
             const responseHotelDtoList = response.data.hotelDtoList;
             console.log(responseHotelDtoList);
+            console.log(response.data.peopleCount);
 
             const newHotelArr = [];
             setHotelArr([]);
             responseHotelDtoList.forEach(hotel => newHotelArr.push(hotel));
 
             newHotelArr.forEach(h => setHotelArr(...hotelArr, hotelArr.push(h)))
-
             setHotelArr(newHotelArr);
+
             console.log(hotelArr);
         } catch (error) {
             console.error('호텔 검색 중 오류가 발생했습니다!', error);
@@ -114,10 +125,123 @@ const SearchHotel = () => {
         console.log(searchParams.hotelName);
     }
 
+    const addPeople = () => {
+        if (searchParams.peopleCount < 9) {
+            setSearchParams({
+                ...searchParams,
+                peopleCount: searchParams.peopleCount + 1
+            })
+        }
+    }
+
+    const minusPeople = () => {
+        if (searchParams.peopleCount > 1) {
+            setSearchParams({
+                ...searchParams,
+                peopleCount: searchParams.peopleCount - 1
+            })
+        }
+    }
+
+    // let TableRow= ({room, moveToSingle})=> {
+    //     return(
+    //         <tr>
+    //             <td>
+    //                 <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
+    //
+    //                     {room.imageList.map((roomImages) => (
+    //                         <Carousel.Item key={roomImages}>
+    //                             <div style={{
+    //                                 display: 'flex',
+    //                                 justifyContent: 'center',
+    //                                 alignItems: 'center',
+    //                                 height: '100%' // 높이 조정 필요
+    //                             }}>
+    //                                 <img
+    //                                     src={`http://localhost:8080/room/${roomImages}`}
+    //                                     alt={roomImages}
+    //                                     style={{width: '600px', height: 'auto', alignItems: "center"}}
+    //
+    //                                 />
+    //                             </div>
+    //                         </Carousel.Item>
+    //                     ))}
+    //
+    //                 </Carousel>
+    //             </td>
+    //             {roomType.map(r=>(
+    //                 room.roomTypeId === r.id ?
+    //                     (<td  onClick={()=> moveToSingle(room.id)} key={r.id}> 방 타입: {r.typeName}</td>) :null
+    //             ))}
+    //
+    //             <td  onClick={()=> moveToSingle(room.id)}>{room.roomPrice}</td>
+    //         </tr>
+    //     )
+    // }
+
     return (
         <Container>
             <h1>호텔 검색</h1>
             <Form onSubmit={handleSearch}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={new Date()}
+                                selected={startDate}
+                                value={startDate}
+                                placeholderText='시작 날짜'
+                                onChange={(date) => {
+                                    setStartDate(date);
+                                    setSearchParams({
+                                        ...searchParams,
+                                        startDate: date
+                                    })
+                                }}
+                            />
+                        </td>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={Math.max(searchParams.startDate, new Date())}
+                                selected={searchParams.endDate}
+                                placeholderText='마지막 날짜'
+                                onChange={(date) => {
+                                    setEndDate(date);
+                                    setSearchParams({
+                                        ...searchParams,
+                                        endDate: date
+                                    })
+                                }}
+                            />
+                        </td>
+                        <td valign='middle' align='center'>
+                            <Table>
+                                <tbody>
+                                <tr>
+                                    <th>
+                                        <Button onClick={minusPeople}>-</Button>
+                                    </th>
+                                    <th>
+                                        <input type='text' className='form-control' disabled='true'
+                                               value={'인원수: ' + searchParams.peopleCount}/>
+                                    </th>
+                                    <th>
+                                        <Button onClick={addPeople}>+</Button>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </Table>
+                        </td>
+                    </tr>
+                    </thead>
+                </Table>
+
+
                 <Table striped>
                     <tbody>
                     <tr>
@@ -542,13 +666,39 @@ const SearchHotel = () => {
             </Form>
 
             <h2>검색 결과</h2>
-            <ul>
+            <Table hover striped bordered>
+                <thead>
+                <tr>
+                    <th>호텔 사진</th>
+                    <th>호텔 이름</th>
+                    <th>도시</th>
+                    <th>등급</th>
+                </tr>
+                </thead>
+                <tbody>
+
                 {hotelArr.map(hotel => (
-                    <li key={hotel.id}>
-                        {hotel.hotelName} - {cities[hotel.cityId - 1].label} - {hotel.hotelGrade}성급
-                    </li>
+                    <tr key={hotel.id}>
+                        <td></td>
+                        <td>
+                            {hotel.hotelName}
+                        </td>
+                        <td>
+                            {cities[hotel.cityId - 1].label}
+                        </td>
+                        <td>
+                            {hotel.hotelGrade}성급
+                        </td>
+                    </tr>
                 ))}
-            </ul>
+                {/*{data.roomList.map(r => (*/}
+                {/*    <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>*/}
+                {/*))}*/}
+
+                </tbody>
+            </Table>
+
+
         </Container>
     );
 
