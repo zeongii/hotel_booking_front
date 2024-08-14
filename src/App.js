@@ -19,7 +19,6 @@ function App() {
     return (
         <div>
             <Routes>
-
                 <Route path="/" element={<Auth/>}/>
                 <Route path="/hotel/showList" element={<ShowList/>}/>
                 <Route path="/user/register" element={<Register/>}/>

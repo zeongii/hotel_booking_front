@@ -24,9 +24,27 @@ let ReservationOne = () => {
 
     let nevigate = useNavigate()
 
-    let onCancled = () => {
+    let onCancled = async (e) => {
+        e.preventDefault();
+
+        try {
+            let resp = await axios.post(`http://localhost:8080/reservation/canceled/${reservationId}`,  {
+                data: data,
+                roomType: roomType,
+                reservationOne: reservationOne,
+                fileData: fileData
+            },{
+                withCredentials: true
+            })
+            if (resp.data.enabled ===0) {
+                //예약 리스트로
+                nevigate(`/guest/myReservations/${reservationId}`)
+            }
+        } catch (error) {
+            console.error(error)
+        }
         // 나중에 호텔 검색 페이지로 넘겨야함
-        nevigate('/hotel/hoteOne/1')
+
     }
 
     let message = reservationOne.isBreakfast === 1 ? "조식 포함" : "조식 미포함";
@@ -56,7 +74,7 @@ let ReservationOne = () => {
         <Container>
             <Row className={'justify-content-center'}>
                 <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
-                    {fileData.map((file)=> (
+                    {fileData.map((file) => (
                         <Carousel.Item key={file.storedFileName}>
                             <div style={{
                                 display: 'flex',
@@ -74,7 +92,7 @@ let ReservationOne = () => {
                         </Carousel.Item>
                     ))}
                 </Carousel>
-                <Navbar expand="lg" className="bg-body-tertiary" >
+                <Navbar expand="lg" className="bg-body-tertiary">
                     <Container className=".nav-container">
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="basic-navbar-nav">
