@@ -28,6 +28,15 @@
   color: #61dafb;
 }
 
+.centered-form-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-file-input {
+  width: 600px;  /* 원하는 너비로 조정 */
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

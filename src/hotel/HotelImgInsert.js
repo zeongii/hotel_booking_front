@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {Button, Container} from "react-bootstrap";
+import {Button, Container, Form} from "react-bootstrap";
 
 let HotelImgInsert = () => {
 
@@ -51,37 +51,46 @@ let HotelImgInsert = () => {
 
     return (
         <Container className={"mt-3"}>
-            <div>
-                <h5>File Data</h5>
-                <input type="file" id="file" onChange={handleChangeFile} multiple />
-                <div>
-                    <h5>Selected Files:</h5>
-                    {filePreviews.length > 0 && (
-                        <div>
-                            {filePreviews.map((preview, index) => (
-                                <div key={index} className="file-preview">
-                                    <img
-                                        src={preview}
-                                        alt={`Preview ${index}`}
-                                        style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }}
-                                    />
-                                    <p>{file[index]?.name}</p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+            <div className="text-center">
+                <h2>업로드 하실 호텔의 사진을 선택해주세요</h2>
+                <Form.Label>Please select a photo of the hotel to upload</Form.Label>
+                <div className="centered-form-control">
+                    <Form.Control
+                        type="file"
+                        id="file"
+                        onChange={handleChangeFile}
+                        style={{width: '600px'}}
+                        className="custom-file-input"
+                        multiple
+
+                    />
                 </div>
-                <div className="text-center mt-3">
-                    <Button
-                        onClick={() => id && file && Send(id, file)}
-                        disabled={!id || !file}
-                    >
-                        Send
-                    </Button>
+                    <div>
+                        {filePreviews.length > 0 && (
+                            <div>
+                                {filePreviews.map((preview, index) => (
+                                    <div key={index} className="file-preview">
+                                        <img
+                                            src={preview}
+                                            alt={`Preview ${index}`}
+                                            style={{width: '600px', height: '500px', objectFit: 'cover', margin: '5px'}}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <div className="text-center mt-3">
+                        <Button
+                            onClick={() => id && file && Send(id, file)}
+                            disabled={!id || !file}
+                        >
+                            사진 입력하기
+                        </Button>
+                    </div>
                 </div>
-            </div>
         </Container>
-    );
+);
 
 
 }

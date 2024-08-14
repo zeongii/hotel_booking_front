@@ -1,6 +1,6 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, Carousel, Container, Table} from "react-bootstrap";
-import data from "bootstrap/js/src/dom/data";
+import { Map } from "react-kakao-maps-sdk";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -31,6 +31,8 @@ let HotelOne = () => {
         {id: 14, label: 'ATM'},
         {id: 15, label: '야외정원'}
     ];
+
+
 
 
     const [roomIndex, setRoomIndex] = useState(0)
@@ -143,6 +145,11 @@ let HotelOne = () => {
     }
 
     return (
+
+
+
+
+
         <Container className={"mt-3"}>
             <h1>호텔id가 {id}인 호텔의 상세 페이지 입니다.</h1>
             <Carousel activeIndex={index} onSelect={handleHotelSelect} className="carousel-container">
@@ -172,9 +179,18 @@ let HotelOne = () => {
             <Button onClick={onDelete}>호텔삭제</Button>
             <Button onClick={roomInsert}>방 등록하기</Button>
 
+
+
             {facilities.map(f => (
                 <div>{facility[f - 1].label}</div>
             ))}
+
+
+            <Map
+                center={{ lat: 33.450701, lng: 126.570667 }}
+                style={{ width: '1000px', height: '600px' }}
+                level={3}
+            />
 
             <Table hover striped bordered className={"table-danger"}>
                 <thead>

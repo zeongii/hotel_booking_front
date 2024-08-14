@@ -11,7 +11,7 @@ let HotelInsert = () => {
         hotelPhone: '',
         hotelEmail: '',
         hotelGrade: '',
-        cityId:'',
+        cityId: '',
         facilities: []
     })
 
@@ -96,123 +96,113 @@ let HotelInsert = () => {
 
     return (
         <Container>
-            <form onSubmit={onSubmit}>
-                <Table>
-                    <thead>
-                    <tr>
-                        <td className={'col-3'}>호텔 등록하기</td>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <form onSubmit={onSubmit}>
+                    <Table style={{width: '70%', margin: '0 auto'}}>
+                        <thead>
+                        <tr className="text-center">
+                            <td className={'col-3'}>호텔 등록하기</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <DaumPostcode onComplete={completeHandler}/>
+                        <tr>
+                            <td>호텔명 &emsp; {buildingName} </td>
+                        </tr>
+                        <tr>
+                            <td>호텔주소 &emsp; {roadAddress} </td>
+                        </tr>
+                        <tr>
+                            <td>호텔이메일 <FormControl type={'text'} value={inputs.hotelEmail} name={'hotelEmail'}
+                                                   onChange={onChange} placeholder={"ex) hotel1234@gmail.com"}/>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td>호텔명</td>
-                        <td>
-                            {buildingName}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>호텔주소</td>
-                        <td>
-                            {roadAddress}
-                        </td>
-                    </tr>
-                    <DaumPostcode onComplete={completeHandler}/>
-                    <tr>
-                        <td>호텔이메일</td>
-                        <td><FormControl type={'text'} value={inputs.hotelEmail} name={'hotelEmail'}
-                                         onChange={onChange}/>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <Form.Label>호텔 도시</Form.Label>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Control
+                                            as="select"
+                                            value={inputs.cityId}
+                                            name="cityId"
+                                            onChange={onChange}
+                                        >
+                                            <option value="">호텔 도시 선택</option>
+                                            <option value="1">서울</option>
+                                            <option value="2">경기</option>
+                                            <option value="3">인천</option>
+                                            <option value="4">대구</option>
+                                            <option value="5">광주</option>
+                                            <option value="6">대전</option>
+                                            <option value="7">울산</option>
+                                            <option value="8">제주</option>
+                                            <option value="9">수원</option>
+                                            <option value="10">경주</option>
+                                            <option value="11">부산</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>호텔전화번호<FormControl type={'text'} value={inputs.hotelPhone} name={'hotelPhone'}
+                                                   onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <Form.Label>호텔 등급</Form.Label>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Control
+                                            as="select"
+                                            value={inputs.hotelGrade}
+                                            name="hotelGrade"
+                                            onChange={onChange}
+                                        >
+                                            <option value="">호텔 등급 선택</option>
+                                            <option value="1">1성급</option>
+                                            <option value="2">2성급</option>
+                                            <option value="3">3성급</option>
+                                            <option value="4">4성급</option>
+                                            <option value="5">5성급</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form>
+                            </td>
+                        </tr>
+                        <tr className="text-center">
+                            <td>편의시설</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {facilities.map(facility => (
+                                    <label key={facility.id}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedFacilities.includes(facility.id)}
+                                            onChange={() => handleCheckboxChange(facility.id)}
+                                        />
+                                        {facility.label} &ensp;
+                                    </label>
+                                ))}
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td>
-                            <Form.Label>호텔 도시</Form.Label>
-                        </td>
-                        <td>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Control
-                                        as="select"
-                                        value={inputs.cityId}
-                                        name="cityId"
-                                        onChange={onChange}
-                                    >
-                                        <option value="">호텔 도시 선택</option>
-                                        <option value="1">서울</option>
-                                        <option value="2">경기</option>
-                                        <option value="3">인천</option>
-                                        <option value="4">대구</option>
-                                        <option value="5">광주</option>
-                                        <option value="6">대전</option>
-                                        <option value="7">울산</option>
-                                        <option value="8">제주</option>
-                                        <option value="9">수원</option>
-                                        <option value="10">경주</option>
-                                        <option value="11">부산</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>호텔전화번호</td>
-                        <td><FormControl type={'text'} value={inputs.hotelPhone} name={'hotelPhone'}
-                                         onChange={onChange}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <Form.Label>호텔 등급</Form.Label>
-                        </td>
-                        <td>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Control
-                                        as="select"
-                                        value={inputs.hotelGrade}
-                                        name="hotelGrade"
-                                        onChange={onChange}
-                                    >
-                                        <option value="">호텔 등급 선택</option>
-                                        <option value="1">1성급</option>
-                                        <option value="2">2성급</option>
-                                        <option value="3">3성급</option>
-                                        <option value="4">4성급</option>
-                                        <option value="5">5성급</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>편의시설</td>
-                        <td>
-                            {facilities.map(facility => (
-                                <label key={facility.id}>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedFacilities.includes(facility.id)}
-                                        onChange={() => handleCheckboxChange(facility.id)}
-                                    />
-                                    {facility.label}
-                                </label>
-                            ))}
-                        </td>
-                    </tr>
-                    <tr>
-                        <input type="file" id="hotelFile" multiple/>
-                    </tr>
 
-                    <tr>
-                        <td>
-                            <Button type={'submit'}>작성하기</Button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </Table>
-            </form>
+                        <tr className="text-center">
+                            <td>
+                                <Button type={'submit'}>작성하기</Button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                </form>
+            </div>
         </Container>
+
     )
 }
 export default HotelInsert

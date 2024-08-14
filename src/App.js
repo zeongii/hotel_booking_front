@@ -7,7 +7,6 @@ import ForgotPassword from "./user/ForgotPassword";
 import Register from "./user/Register";
 import SearchHotel from "./search/hotel";
 import HotelOne from "./hotel/hotelOne";
-import Register from "./user/Register";
 import RoomRegister from "./room/RoomRegister";
 import HotelList from "./hotel/HotelList";
 import RoomOne from "./room/RoomOne";
