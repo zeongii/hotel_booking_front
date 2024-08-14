@@ -5,14 +5,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 let HotelOne = () => {
-
-
-
+    
     let location = useLocation()
     let nevigate = useNavigate()
 
     let params=useParams()
-    let id= parseInt(params.id)
+    let id= parseInt(params.id) // hotelId
     
     
     const [roomIndex, setRoomIndex]=useState(0)
@@ -20,11 +18,11 @@ let HotelOne = () => {
         setRoomIndex(selectedIndex)
     }
 
-    let [data,setData]=useState({roomList:[]})
+    let [roomdata,setRoomdata]=useState({roomList:[]})
     let [roomType,setRoomType] = useState([])
 
     let roomInsert =(hotelId) => {
-        nevigate(`/room/register/`+1)
+        nevigate(`/room/register/` + hotelId)
     }
     let moveToSingle = (roomId)=> {
         nevigate('/room/roomOne/'+roomId)
@@ -37,7 +35,7 @@ let HotelOne = () => {
                     withCredentials:true
                 })
                 if(resp.status === 200) {
-                    setData(resp.data)
+                    setRoomdata(resp.data)
                     setRoomType(resp.data.roomTypeList)
                 }
             } catch (e) {
@@ -103,7 +101,7 @@ let HotelOne = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.roomList.map(r => (
+                {roomdata.roomList.map(r => (
                     <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>
                 ))}
 
