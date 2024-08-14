@@ -24,7 +24,6 @@ function App() {
                 <Route path="/" element={<Auth/>}/>
                 <Route path="/hotelAll" element={<HotelList/>}/>
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
-                <Route path="/hotelShowOne/:id" element={<HotelShowOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>
                 <Route path="*" element={<NotFound/>}/>

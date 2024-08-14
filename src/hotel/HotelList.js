@@ -3,7 +3,6 @@ import axios from "axios";
 import {Button, Carousel, Container, Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
-import collapse from "bootstrap/js/src/collapse";
 
 let HotelList = () => {
 
