@@ -22,7 +22,7 @@ let ForgotEmail = () => {
 
         try {
             let response = await axios({
-                url: 'http://localhost:8080/user/forgot-username',
+                url: 'http://localhost:8080/guest/forgot-username',
                 method: 'POST',
                 data: {
                     name: inputs.name,
@@ -60,7 +60,7 @@ let ForgotEmail = () => {
                 <Table striped hover bordered>
                     <thead>
                     <tr>
-                        <th colSpan={2}>가입한 이메일 찾기</th>
+                        <th colSpan={2} className={"text-center"}>가입한 이메일 찾기</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -89,7 +89,7 @@ let ForgotEmail = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={2}>
+                        <td colSpan={2} className={"text-center"}>
                             <Button type="submit">아이디 찾기</Button>
                         </td>
                     </tr>
