@@ -7,12 +7,13 @@ const Wishlist = () => {
     const location = useLocation();
     const { userInfo } = location.state || {};
     const [wishlist, setWishlist] = useState([]);
+    const id = userInfo?.id;
 
     useEffect(() => {
         const fetchWishlist = async () => {
             try {
                 if (userInfo && userInfo.id) {
-                    const response = await axios.get(`http://localhost:8080/guest/wishlist/${userInfo.id}`);
+                    const response = await axios.get('http://localhost:8080/guest/wishlist/'+id);
                     setWishlist(response.data);
                 } else {
                     console.error('사용자 ID가 정의되지 않았습니다.');

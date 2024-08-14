@@ -25,6 +25,7 @@ let Auth = () => {
         console.log("서버로 보내는 비번:", inputs.password);  // 비밀번호 출력
 
         try {
+            console.log("요청을 보내는 중입니다.");
             let response = await axios({
                 url: 'http://localhost:8080/guest/auth',
                 method: 'POST',
@@ -33,21 +34,23 @@ let Auth = () => {
                     password: inputs.password
                 },
                 withCredentials: true
-            });
+            }, []);
 
             if (response.status === 200 && response.data.result === 'success') {
                 let userInfo = {
                     id: response.data.id,
                     email: response.data.email,
+                    password: response.data.password,
                     role: response.data.role,
                     nickname: response.data.nickname,
                     name: response.data.name,
                     phone: response.data.phone,
                     address: response.data.address,
+                    userGender: response.data.userGender,
                     userTotalAmount: response.data.userTotalAmount
 
                 };
-                console.log(response.data)
+                console.log("userInfo를 사용하여 사용자 페이지로 이동:", userInfo);
                 navigate('guest/mypage/' + userInfo.id, { state: { userInfo } });
             }
         } catch (error) {

@@ -11,9 +11,6 @@ const MyPage = () => {
         return <p>사용자 정보를 불러올 수 없습니다.</p>;
     }
 
-    const handlePasswordChange = () => {
-        navigate('/guest/changePassword/' +userInfo.id, { state: { userId: userInfo.id } });
-    };
 
     const handleViewReservations = () => {
         navigate('/guest/myReservations/' + userInfo.id, { state: {userInfo} });
@@ -21,6 +18,10 @@ const MyPage = () => {
 
     const handleViewWishlist = () => {
         navigate('/guest/wishlist/' + userInfo.id, { state: {userInfo} });
+    };
+
+    const handleEditProfile = () => {
+        navigate('/guest/mypage/edit', { state: { userInfo } });
     };
 
     return (
@@ -54,7 +55,7 @@ const MyPage = () => {
                 </tr>
                 </tbody>
             </Table>
-            <Button  onClick={handlePasswordChange}>수정하기</Button>{' '}
+            <Button onClick={handleEditProfile}>수정하기</Button>{' '}
             <Button onClick={handleViewWishlist}>찜 목록 </Button> {' '}
             <Button onClick={handleViewReservations}>예약목록</Button>
         </Container>

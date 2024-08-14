@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Table } from 'react-bootstrap';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 
 const MyReservations = () => {
     const location = useLocation();
     const { userInfo } = location.state || {};
     const [reservations, setReservations] = useState([]);
+    const id = userInfo?.id;
+
+
+    console.log(id)
 
     useEffect(() => {
         const fetchReservations = async () => {
             console.log(userInfo.id);
             try {
                 if (userInfo && userInfo.id) {
-                    const response = await axios.get('http://localhost:8080/guest/reservations/${userInfo.id}');
+                    const response = await axios.get('http://localhost:8080/guest/reservations/' + id);
                     setReservations(response.data);
                 } else {
                     console.error('사용자 ID가 정의되지 않았습니다.');
