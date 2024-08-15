@@ -17,12 +17,14 @@ import NotFound from "./NotFound";
 import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelInsert from "./hotel/HotelInsert";
 import Map from "./hotel/Map";
+import Header from "./Header";
+
 
 function App() {
     return (
         <div>
+           {/* <Header/>*/}
             <Routes>
-
                 <Route path="/" element={<Auth/>}/>
                 <Route path="/Map" element={<Map/>}/>
                 <Route path="/user/register" element={<Register/>}/>

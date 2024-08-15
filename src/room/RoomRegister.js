@@ -78,109 +78,88 @@ let RoomRegister = () => {
 
     return (
         <Container className={"mt-3"}>
-            <form onSubmit={onSubmit} encType={"multipart/form-data"}>
-                <Table striped hover bordered>
-                    <thead>
-                    <tr>
-                        <td colSpan={2} className={"text-center"}>객실 등록하기</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>객실 이름</td>
-                        <td>
-                            <FormControl
-                                type={'text'}
-                                value={inputs.roomName}
-                                name={'roomName'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>객실 타입</td>
-                        <td>
-                            <FormSelect name="roomTypeId" value={inputs.roomTypeId} onChange={onChange}>
-                                {roomTypeList.map(r => (
-                                    <option key={r.id} value={r.id}>
-                                        {r.typeName}
-                                    </option>
-                                ))}
-                            </FormSelect>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>객실 수</td>
-                        <td>
-                            <FormControl
-                                type={'number'}
-                                value={inputs.roomMax}
-                                name={'roomMax'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>객실 가격</td>
-                        <td>
-                            <FormControl
-                                type={'number'}
-                                value={inputs.roomPrice}
-                                name={'roomPrice'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>내용</td>
-                        <td>
-                            <FormControl
-                                type={'text'}
-                                value={inputs.roomContent}
-                                name={'roomContent'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>조식 가격</td>
-                        <td>
-                            <FormControl
-                                type={'number'}
-                                value={inputs.breakfastPrice}
-                                name={'breakfastPrice'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    {/*<tr>
-                        <td>체크인</td>
-                        <td>
-                            <FormControl
-                                type={'datetime-local'}
-                                value={inputs.checkIn}
-                                name={'checkIn'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>체크아웃</td>
-                        <td>
-                            <FormControl
-                                type={'datetime-local'}
-                                value={inputs.checkOut}
-                                name={'checkOut'}
-                                onChange={onChange} />
-                        </td>
-                    </tr>*/}
-
-                    <tr>
-                        <td colSpan={2} className={'text-center'}>
-                            <Button type={'submit'}>
-                                등록하기
-                            </Button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </Table>
-            </form>
+                <form onSubmit={onSubmit} encType={"multipart/form-data"}>
+                    <Table>
+                        <thead>
+                        <tr>
+                            <td colSpan={2} className={"text-center"}>객실 등록하기</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>객실 이름</td>
+                            <td>
+                                <FormControl
+                                    type={'text'}
+                                    value={inputs.roomName}
+                                    name={'roomName'}
+                                    onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>객실 타입</td>
+                            <td>
+                                <FormSelect name="roomTypeId" value={inputs.roomTypeId} onChange={onChange}>
+                                    {roomTypeList.map(r => (
+                                        <option key={r.id} value={r.id}>
+                                            {r.typeName}
+                                        </option>
+                                    ))}
+                                </FormSelect>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>객실 수</td>
+                            <td>
+                                <FormControl
+                                    type={'number'}
+                                    value={inputs.roomMax}
+                                    name={'roomMax'}
+                                    onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>객실 가격</td>
+                            <td>
+                                <FormControl
+                                    type={'number'}
+                                    value={inputs.roomPrice}
+                                    name={'roomPrice'}
+                                    onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>내용</td>
+                            <td>
+                                <FormControl
+                                    type={'text'}
+                                    value={inputs.roomContent}
+                                    name={'roomContent'}
+                                    onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>조식 가격</td>
+                            <td>
+                                <FormControl
+                                    type={'number'}
+                                    value={inputs.breakfastPrice}
+                                    name={'breakfastPrice'}
+                                    onChange={onChange}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={2} className={'text-center'}>
+                                <Button type={'submit'}>
+                                    등록하기
+                                </Button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                </form>
         </Container>
-    );
+);
 };
 
 export default RoomRegister;

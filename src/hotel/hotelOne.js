@@ -3,7 +3,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import axios from "axios";
 import Map from './Map';
-import travelingImage from "./traveling.png";
+import travelingImage from './traveling.png';
+import style from './Hotel.module.css'
+
 
 const HotelOne = () => {
     const navigate = useNavigate();
@@ -80,66 +82,118 @@ const HotelOne = () => {
     return (
         <Container className={"mt-3"}>
             <Carousel activeIndex={index} onSelect={handleHotelSelect} className="carousel-container">
-                {fileData.map((file) => (
-                    <Carousel.Item key={file.storedFileName}>
-                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                {fileData.length > 0 ? (
+                    fileData.map((file) => (
+                        <Carousel.Item key={file.storedFileName}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%',
+                                marginBottom: "50px"
+                            }}>
+                                <img
+                                    src={`http://localhost:8080/hotel/${file.storedFileName}`}
+                                    alt={file.originalFileName}
+                                    style={{
+                                        width: '600px',
+                                        height: 'auto',
+                                        border: '1px solid #9ec2fc',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
+                                    }}
+                                />
+                            </div>
+                        </Carousel.Item>
+                    ))
+                ) : (
+                    <Carousel.Item>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '100%',
+                            marginBottom: "50px"
+                        }}>
                             <img
-                                src={`http://localhost:8080/hotel/${file.storedFileName}`}
-                                alt={file.originalFileName}
-                                style={{width: '600px', height: 'auto'}}
+                                src={travelingImage}
+                                alt="기본 이미지"
+                                style={{
+                                    width: '600px',
+                                    height: 'auto',
+                                    border: '1px solid #9ec2fc',
+                                    borderRadius: '8px',
+                                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
+                                }}
                             />
                         </div>
                     </Carousel.Item>
-                ))}
+                )}
             </Carousel>
-            <h1>{hotelData.hotelName}</h1>
-            {facilities.map(f => (
-                <div key={f}>{facility[f - 1].label}</div>
-            ))}
+            <h1 className="mb-5">{hotelData.hotelName}</h1>
+            <div className={style.hotelContainer}>
+                <div className={style.hotelInfo}>
+                    {facilities.map(f => (
+                        <div key={f}>{facility[f - 1].label}</div>
+                    ))}
+                </div>
 
+                <div className={style.hotelMap}><Map address={hotelData.address}/></div>
 
-            {/*<Map address={hotelData.address}/>
-                    맵 고장남 하나만 뜨고 있음*/}
+            </div>
+
 
             <div style={styles.cardContainer}>
-                {roomdata.roomList.map(r => (
-                    <Card style={{width: '18rem'}}>
-                        <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
-                            {r.imageList.length > 0 ? (
-                                r.imageList.map((roomImages) => (
-                                    <Carousel.Item key={roomImages}>
-                                        <div style={styles.imageContainer}>
-                                            <Card.Img
-                                                src={`http://localhost:8080/room/${roomImages}`}
-                                                alt={roomImages}
-                                                style={styles.image}
-                                            />
-                                        </div>
-                                    </Carousel.Item>
-                                ))
-                            ) : (
-                                <div style={styles.imageContainer}>
-                                    <Card.Img
-                                        src={travelingImage}
-                                        alt="기본 이미지"
-                                        style={styles.image}
-                                    />
-                                </div>
-                            )}
-                        </Carousel>
+                {roomdata.roomList.length > 0 ? (
+                    roomdata.roomList.map(r => (
+                        <Card key={r.id} style={{width: '18rem', marginTop: "50px"}}>
+                            <Carousel activeIndex={roomIndex} onSelect={handleSelect}
+                                      className="carousel-container">
+                                {r.imageList.length > 0 ? (
+                                    r.imageList.map((roomImages) => (
+                                        <Carousel.Item key={roomImages}>
+                                            <div style={styles.imageContainer}>
+                                                <Card.Img
+                                                    src={`http://localhost:8080/room/${roomImages}`}
+                                                    alt={roomImages}
+                                                    style={styles.image}
+                                                />
+                                            </div>
+                                        </Carousel.Item>
+                                    ))
+                                ) : (
+                                    <div style={styles.imageContainer}>
+                                        <Card.Img
+                                            src={travelingImage}
+                                            alt="기본 이미지"
+                                            style={styles.image}
+                                        />
+                                    </div>
+                                )}
+                            </Carousel>
 
-                        <Card.Body onClick={() => moveToSingle(r.id)}>
-                            <Card.Title>{roomType.map(r => (
-                                r.roomTypeId === r.id ? <td key={r.id}> 방 타입: {r.typeName}</td> : null
-                            ))}</Card.Title>
-                            <Card.Text>
-                                {r.roomPrice}
-                            </Card.Text>
-                            <Button variant="primary">예약하러 가기</Button>
-                        </Card.Body>
-                    </Card>
-                ))}
+                            <Card.Body onClick={() => moveToSingle(r.id)}>
+                                <Card.Title>
+
+                                </Card.Title>
+                                <Card.Text>
+                                    {roomType.map(rt => (
+                                        r.roomTypeId === rt.id ? <td key={rt.id}> {rt.typeName}</td> : null
+                                    ))}
+                                    {r.roomPrice}
+                                </Card.Text>
+                                <Button style={button}>예약하러 가기</Button>
+                            </Card.Body>
+                        </Card>
+                    ))
+                ) : (
+                    <div className={style.room}>
+                            <h2>No rooms are registered</h2>
+                    </div>
+                )}
             </div>
+
+            <Button onClick={roomInsert} style={button}>방 등록하기</Button>
         </Container>
     );
 };
@@ -149,7 +203,6 @@ const styles = {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '1rem',
-        justifyContent: 'space-between',
     },
     card: {
         width: '15rem',
@@ -159,12 +212,19 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '300px', // 적절한 높이 설정
+        height: '200px', // 적절한 높이 설정
     },
     image: {
         width: '100%',
-        height: '300px',
-    },
+        height: '200px',
+    }
+
 };
+
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
+};
+
 
 export default HotelOne;

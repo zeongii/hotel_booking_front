@@ -44,7 +44,7 @@ let HotelList = () => {
     }, [])
 
     return (
-        <Container className={"mt-3"}>
+        <Container className={"mb-100"}>
             <div style={styles.cardContainer}>
                 {data.hotelList.map((h) => (
                     <Card style={{width: '18rem'}}>
@@ -77,7 +77,7 @@ let HotelList = () => {
                             <Card.Text>
                                 호텔 정보 넣기
                             </Card.Text>
-                            <Button variant="primary">예약하러 가기</Button>
+                            <Button style={button}>예약하러 가기</Button>
                         </Card.Body>
                     </Card>
                 ))}
@@ -108,6 +108,21 @@ const styles = {
         width: '100%',
         height: '300px',
     },
+};
+
+const front = {
+    image: {
+        width: '100%',
+        height: '200px',
+        borderRadius: '8px',
+        marginBottom: '10px',
+        position: 'relative'
+    },
+}
+
+const button = {
+    backgroundColor: '#99bffd',
+    borderColor: '#99bffd',
 };
 
 

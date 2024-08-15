@@ -1,7 +1,9 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {Button, Carousel, Container, Nav, Navbar, Row, Table} from "react-bootstrap";
+import styles from './Room.module.css'
+import travelingImage from "../hotel/traveling.png";
 
 
 let RoomOne = () => {
@@ -31,7 +33,7 @@ let RoomOne = () => {
     }
 
     let moveToReservation = () => {
-        nevigate(`/reservation/roomReservation/`+roomId)
+        nevigate(`/reservation/roomReservation/` + roomId)
     }
 
     useEffect(() => {
@@ -73,65 +75,86 @@ let RoomOne = () => {
     return (
         <Container>
             <Row className={'justify-content-center'}>
-                <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container">
+                <div className={styles.roomContainer}>
+                    <div className={styles.roomImg}>
+                        <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container">
+                            {fileData.length > 0 ? (
+                                fileData.map((file) => (
+                                    <Carousel.Item key={file.storedFileName}>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%' // 높이 조정 필요
+                                        }}>
+                                            <img
+                                                src={`http://localhost:8080/room/${file.storedFileName}`}
+                                                alt={file.originalFileName}
+                                                style={{width: '500px', height: '400px', alignItems: "center", border: '1px solid #9ec2fc',
+                                                    borderRadius: '10px',}}
 
-                    {fileData.map((file) => (
-                        <Carousel.Item key={file.storedFileName}>
-                            <div style={{
+                                            />
+                                        </div>
+                                    </Carousel.Item>
+                                ))) : (<div style={{
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                height: '100%' // 높이 조정 필요
+                                height: '100%',
+                                marginBottom: "50px"
                             }}>
                                 <img
-                                    src={`http://localhost:8080/room/${file.storedFileName}`}
-                                    alt={file.originalFileName}
-                                    style={{width: '600px', height: 'auto', alignItems: "center"}}
-
+                                    src={travelingImage}
+                                    alt="기본 이미지"
+                                    style={{
+                                        width: '500px',
+                                        height: '400px',
+                                        border: '1px solid #9ec2fc',
+                                        borderRadius: '10px',
+                                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
+                                    }}
                                 />
-                            </div>
-                        </Carousel.Item>
-                    ))}
+                            </div>)}
 
-                </Carousel>
-                <Navbar expand="lg" className="bg-body-tertiary" >
-                    <Container className=".nav-container">
-                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link href="#home">Home</Nav.Link>
-                                <Nav.Link href="#link">Link</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
 
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <td colSpan={3}>
-                            <h1>방 이름: {data.roomName}</h1>
-                        </td>
-                    </tr>
-                    </thead>
+                        </Carousel>
+                    </div>
+
+
+                    <div className={styles.roomInfo}>
+                        <Table bordered hover>
+                            <thead>
+                            <tr>
+                                <td colSpan={3}>
+                                    <h1>{data.roomName}</h1>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {roomType.map(r => (
+                                    data.roomTypeId === r.id ?
+                                        (<td key={r.id} colSpan={3}>{r.typeName}</td>) : null
+                                ))}
+                            </tr>
+                            <tr>
+                                <td colSpan={3}>{data.roomContent}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan={3}>{data.breakfastPrice}</td>
+                            </tr>
+                            </tbody>
+                        </Table>
+                    </div>
+                    <Button onClick={goBack}>뒤로 가기</Button>
+
+                </div>
+                <Button onClick={moveToReservation} style={button}>예약하기</Button>
+
+
+
+                <Table>
                     <tbody>
-                    <tr>
-                        {roomType.map(r => (
-                            data.roomTypeId === r.id ?
-                                (<td key={r.id} colSpan={3}>방 타입: {r.typeName}</td>) : null
-                        ))}
-                    </tr>
-                    <tr>
-                        <td colSpan={3}>방 설명: {data.roomContent}</td>
-                    </tr>
-                    <tr>
-                        <td colSpan={3}>조식 가격: {data.breakfastPrice}</td>
-                    </tr>
-                    <tr>
-                        <td>작성일: {data.createdTime}</td>
-                        <td>수정일: {data.updatedTime}</td>
-                    </tr>
-
                     <tr>
                         <td>
                             <Button onClick={onUpdate}>수정하기</Button>
@@ -140,23 +163,20 @@ let RoomOne = () => {
                             <Button onClick={onDelete}> 삭제하기</Button>
                         </td>
                         <td>
-                            <Button onClick={moveToReservation}>예약하기</Button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colSpan={2} className={"text-center"}>
-                            <Button onClick={goBack}>뒤로 가기</Button>
 
                         </td>
                     </tr>
                     </tbody>
-
                 </Table>
             </Row>
         </Container>
     )
 
 }
+
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
+};
 
 export default RoomOne
