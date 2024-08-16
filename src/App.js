@@ -18,6 +18,7 @@ import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelInsert from "./hotel/HotelInsert";
 import Map from "./hotel/Map";
 import Header from "./Header";
+import HotelUpdate from "./hotel/HotelUpdate";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>
+                <Route path="/hotelUpdate/:id" element={<HotelUpdate/>}/>
                 <Route path="/room/register/:hotelId" element={<RoomRegister/>}/>
                 <Route path="/room/roomImgInsert/:id" element={<RoomImgInsert/>}/>
                 <Route path="/room/roomOne/:roomId" element={<RoomOne/>}/>

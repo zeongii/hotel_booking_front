@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Button, Container, Form, FormControl, Table} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
 
 let HotelInsert = () => {
+    let params = useParams()
+    let id = params.id
+
+
     let [inputs, setInputs] = useState({
         hotelName: '',
         hotelAddress: '',
@@ -84,8 +88,7 @@ let HotelInsert = () => {
         console.log(valueMap)
         try {
             let resp = await axios.post('http://localhost:8080/hotel/update/' + id, valueMap)
-            console.log(selectedFacilities)
-            let id = resp.data.resultId; // 서버 응답에서 id 추출
+            console.log(resp)
             moveToNext(id)
 
 

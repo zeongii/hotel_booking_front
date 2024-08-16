@@ -4,6 +4,7 @@ import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import travelingImage from './traveling.png';
+import hotelInsert from "./HotelInsert";
 
 let HotelList = () => {
 
@@ -81,6 +82,9 @@ let HotelList = () => {
                         </Card.Body>
                     </Card>
                 ))}
+            </div>
+            <div>
+                <Button onClick={moveInsert}>호텔 추가</Button>
             </div>
         </Container>
 )

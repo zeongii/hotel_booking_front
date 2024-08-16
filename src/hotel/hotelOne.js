@@ -53,6 +53,10 @@ const HotelOne = () => {
         }
     };
 
+    const onUpdate = () => {
+        navigate('/hotelUpdate/' + id)
+    }
+
     useEffect(() => {
         const fetchHotelData = async () => {
             const resp = await axios.get(`http://localhost:8080/hotel/hotelOne/${id}`);
@@ -194,6 +198,9 @@ const HotelOne = () => {
             </div>
 
             <Button onClick={roomInsert} style={button}>방 등록하기</Button>
+            <Button onClick={onDelete} style={button}>방 삭제하기</Button>
+            <Button onClick={onUpdate} style={button}>방 수정하기</Button>
+
         </Container>
     );
 };
