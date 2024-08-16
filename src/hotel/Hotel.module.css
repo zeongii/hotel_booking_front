@@ -7,6 +7,16 @@
 
 }
 
+.hotelInsertContainer {
+    display: flex;
+    align-items: center;
+    border: 10px solid #d1e6ff;
+    border-radius: 5px;
+    margin-left: 250px;
+    width: 800px;
+
+}
+
 .hotelInfo {
     max-width: 200px;
     margin-left: 50px;

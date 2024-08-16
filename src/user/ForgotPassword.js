@@ -1,6 +1,8 @@
-import { Button, Container, FormControl, Table } from "react-bootstrap";
-import { useState } from "react";
+import {Button, Container, FormControl, Table} from "react-bootstrap";
+import {useState} from "react";
 import axios from "axios";
+import style from './User.module.css'
+
 
 let ForgotPassword = () => {
     let [inputs, setInputs] = useState({
@@ -10,7 +12,7 @@ let ForgotPassword = () => {
     });
 
     let onChange = (e) => {
-        let { name, value } = e.target;
+        let {name, value} = e.target;
         setInputs({
             ...inputs,
             [name]: value
@@ -42,61 +44,66 @@ let ForgotPassword = () => {
     };
 
     return (
-        <Container>
-            <form onSubmit={onSubmit}>
-                <Table striped hover bordered>
-                    <thead>
-                    <tr>
-                        <th colSpan={2}>비밀번호 찾기</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>이메일</th>
-                        <td>
-                            <FormControl
-                                type="email"
-                                name="email"
-                                value={inputs.email}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="name"
-                                value={inputs.name}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="phone"
-                                value={inputs.phone}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan={2}>
-                            <Button type="submit">비밀번호 찾기</Button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </Table>
-            </form>
-        </Container>
+        <div className={style.register}>
+            <Container>
+                <form onSubmit={onSubmit}>
+                    <Table >
+                        <thead>
+                        <tr>
+                            <th colSpan={2}>비밀번호 찾기</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>이메일
+                                <FormControl
+                                    type="email"
+                                    name="email"
+                                    value={inputs.email}
+                                    onChange={onChange}
+                                    required
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>이름
+                                <FormControl
+                                    type="text"
+                                    name="name"
+                                    value={inputs.name}
+                                    onChange={onChange}
+                                    required
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>전화번호
+                                <FormControl
+                                    type="text"
+                                    name="phone"
+                                    value={inputs.phone}
+                                    onChange={onChange}
+                                    required
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={2}>
+                                <Button type="submit" style={button}>비밀번호 찾기</Button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                </form>
+            </Container>
+        </div>
     );
+};
+
+
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
 };
 
 export default ForgotPassword;

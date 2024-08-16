@@ -1,26 +1,26 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useState} from "react";
 import axios from "axios";
-import { Button, Container, FormControl, FormSelect, Table } from "react-bootstrap";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
+import style from './Room.module.css'
+
 
 let RoomRegister = () => {
     let hotelId = parseInt(1);
 
     const roomTypeList = [
-        { id: 1, typeName: '스탠다드+싱글+시티뷰' },
-        { id: 2, typeName: '스탠다드+싱글+오션뷰' },
-        { id: 3, typeName: '스탠다드+더블+시티뷰' },
-        { id: 4, typeName: '스탠다드+더블+오션뷰' },
-        { id: 5, typeName: '디럭스+싱글+시티뷰' },
-        { id: 6, typeName: '디럭스+싱글+오션뷰' },
-        { id: 7, typeName: '디럭스+더블+시티뷰' },
-        { id: 8, typeName: '디럭스+더블+오션뷰' },
-        { id: 9, typeName: '스위트+시티뷰' },
-        { id: 10, typeName: '스위트+오션뷰' },
-        { id: 11, typeName: '레지던스+시티뷰' },
-        { id: 12, typeName: '레지던스+오션뷰' }
+        {id: 1, typeName: '스탠다드+싱글+시티뷰'},
+        {id: 2, typeName: '스탠다드+싱글+오션뷰'},
+        {id: 3, typeName: '스탠다드+더블+시티뷰'},
+        {id: 4, typeName: '스탠다드+더블+오션뷰'},
+        {id: 5, typeName: '디럭스+싱글+시티뷰'},
+        {id: 6, typeName: '디럭스+싱글+오션뷰'},
+        {id: 7, typeName: '디럭스+더블+시티뷰'},
+        {id: 8, typeName: '디럭스+더블+오션뷰'},
+        {id: 9, typeName: '스위트+시티뷰'},
+        {id: 10, typeName: '스위트+오션뷰'},
+        {id: 11, typeName: '레지던스+시티뷰'},
+        {id: 12, typeName: '레지던스+오션뷰'}
     ];
 
     let [inputs, setInputs] = useState({
@@ -41,7 +41,7 @@ let RoomRegister = () => {
     };
 
     let onChange = (e) => {
-        let { name, value } = e.target;
+        let {name, value} = e.target;
         if (name === "roomTypeId") {
             value = parseInt(value, 10);
         }
@@ -53,14 +53,13 @@ let RoomRegister = () => {
     };
 
 
-
     let onSubmit = async (e) => {
         e.preventDefault();
         console.log(inputs)
 
 
         try {
-            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`,inputs, {
+            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`, inputs, {
 
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +76,9 @@ let RoomRegister = () => {
     };
 
     return (
-        <Container className={"mt-3"}>
+        <div className={style.roomInsertContainer}>
+
+            <Container className={"mt-3"}>
                 <form onSubmit={onSubmit} encType={"multipart/form-data"}>
                     <Table>
                         <thead>
@@ -158,8 +159,12 @@ let RoomRegister = () => {
                         </tbody>
                     </Table>
                 </form>
-        </Container>
-);
+
+            </Container>
+        </div>
+
+    )
+        ;
 };
 
 export default RoomRegister;

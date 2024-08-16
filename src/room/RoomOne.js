@@ -143,13 +143,16 @@ let RoomOne = () => {
                             <tr>
                                 <td colSpan={3}>{data.breakfastPrice}</td>
                             </tr>
+                            <tr className={"text-center"}>
+                                <td> <Button onClick={moveToReservation} style={button}>예약하기</Button></td>
+                            </tr>
                             </tbody>
                         </Table>
                     </div>
-                    <Button onClick={goBack}>뒤로 가기</Button>
+                    <Button onClick={goBack} style={button}>뒤로 가기</Button>
 
                 </div>
-                <Button onClick={moveToReservation} style={button}>예약하기</Button>
+
 
 
 

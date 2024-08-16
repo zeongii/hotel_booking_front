@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Button, Container, FormControl, Table} from "react-bootstrap";
+import style from './User.module.css'
 
 let Register = () => {
     let[inputs,setInputs] = useState({
@@ -37,53 +38,56 @@ let Register = () => {
         }
     }
     return(
+        <div className={style.register}>
         <Container className={"mt-3"}>
             <form onSubmit={onSubmit}>
-                <Table striped hover bordered>
+                <Table >
                     <thead>
                     <tr>
                         <td colSpan={2} className={"text-center"}>회원 가입하기</td>
                     </tr>
                     </thead>
                     <tbody>
+                    <tr >
+                        <td>아이디 <FormControl type={'email'} value={inputs.email} name={'email'} className={"form-control"}
+                                         onChange={onChange} style={{marginTop: '10px'}}/></td>
+                    </tr>
                     <tr>
-                        <td>아이디</td>
-                        <td><FormControl type={'email'} value={inputs.email} name={'email'} className={"form-control"}
+                        <td>비밀번호 <FormControl type={'password'} value={inputs.password} name={'password'}
+                                         className={"form-control"} style={{marginTop: '10px'}}
                                          onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <td>비밀번호</td>
-                        <td><FormControl type={'password'} value={inputs.password} name={'password'}
+                        <td>업체이름 <FormControl type={'text'} value={inputs.nickname} name={'nickname'} style={{marginTop: '10px'}}
                                          className={"form-control"}
                                          onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <td>업체이름</td>
-                        <td><FormControl type={'text'} value={inputs.nickname} name={'nickname'}
-                                         className={"form-control"}
+                        <td>전화번호 <FormControl type={'text'} value={inputs.phone} name={'phone'} className={"form-control"} style={{marginTop: '10px'}}
                                          onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <td>전화번호</td>
-                        <td><FormControl type={'text'} value={inputs.phone} name={'phone'} className={"form-control"}
-                                         onChange={onChange}/></td>
-                    </tr>
-                    <tr>
-                        <td>주소</td>
-                        <td><FormControl type={'text'} value={inputs.address} name={'address'}
+                        <td>주소 <FormControl type={'text'} value={inputs.address} name={'address'} style={{marginTop: '10px'}}
                                          className={"form-control"}
                                          onChange={onChange}/></td>
                     </tr>
                     <tr>
                         <td colSpan={2}>
-                            <Button type={'submit'}>회원가입</Button>
+                            <Button type={'submit'} style={button}>회원가입</Button>
                         </td>
                     </tr>
                     </tbody>
                 </Table>
             </form>
         </Container>
+        </div>
     )
 }
+
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
+};
+
 
 export default Register

@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Container, Form, FormControl, Table} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
+import style from './Hotel.module.css'
 
 let HotelInsert = () => {
     let [inputs, setInputs] = useState({
@@ -96,7 +97,7 @@ let HotelInsert = () => {
 
     return (
         <Container>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div className={style.hotelInsertContainer}>
                 <form onSubmit={onSubmit}>
                     <Table style={{width: '70%', margin: '0 auto'}}>
                         <thead>

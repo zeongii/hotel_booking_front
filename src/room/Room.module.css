@@ -3,6 +3,16 @@
     align-items: flex-start;
 }
 
+.roomInsertContainer {
+    display: flex;
+    align-items: center;
+    border: 10px solid #d1e6ff;
+    border-radius: 5px;
+    margin-left: 250px;
+    width: 800px;
+
+}
+
 .roomImage {
     max-width: 200px;
     margin-right: 50px;
