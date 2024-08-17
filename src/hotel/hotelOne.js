@@ -5,6 +5,8 @@ import axios from "axios";
 import Map from './Map';
 import travelingImage from './traveling.png';
 import style from './Hotel.module.css'
+import { AiFillHeart } from "react-icons/ai";
+import hotel from "../search/hotel";
 
 const HotelOne = () => {
     const navigate = useNavigate();
@@ -54,6 +56,27 @@ const HotelOne = () => {
 
     const onUpdate = () => {
         navigate('/hotelUpdate/' + id)
+    }
+
+    let [wish, setWish] = useState( {
+        hotelId: id ,
+        guestId: 1
+    })
+
+    const [isWished, setIsWished] = useState(false);
+
+
+
+    const wishList = async () => {
+        try {
+            const resp = await axios.post('http://localhost:8080/guest/wishlist', wish);
+
+            console.log(resp.data);
+            console.log(wish)
+            setIsWished(!isWished);
+        } catch (error) {
+            console.error('Error adding/removing from wishlist:', error);
+        }
     }
 
     useEffect(() => {
@@ -133,7 +156,10 @@ const HotelOne = () => {
                     </Carousel.Item>
                 )}
             </Carousel>
-            <h1 className="mb-5">{hotelData.hotelName}</h1>
+            <h1 className="mb-5">{hotelData.hotelName}
+                <AiFillHeart onClick={wishList}  style={{ cursor: 'pointer', fontSize: '45px', color: isWished ? 'red' : 'lightgray' }}/>
+
+            </h1>
             <div className={style.hotelContainer}>
                 <div className={style.hotelInfo}>
                     {facilities.map(f => (
