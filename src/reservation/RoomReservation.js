@@ -39,7 +39,7 @@ let RoomReservation = () => {
         e.preventDefault();
 
         try{
-            let resp = await axios.post(`http://localhost:8080/reservation/roomReservation/${roomId}`,inputs, {
+            let resp = await axios.post(`http://localhost:8081/reservation/roomReservation/${roomId}`,inputs, {
                 withCredentials: true
             });
 

@@ -49,7 +49,7 @@ let RoomUpdate= () => {
     let onSubmit = async (e) => {
         e.preventDefault()
         //나중에 글쓴이 확인하는거 넣어야함 if문으로
-        let resp = await axios.post('http://localhost:8080/room/update', inputs, {
+        let resp = await axios.post('http://localhost:8081/room/update', inputs, {
             withCredentials: true
         })
         if (resp.status === 200) {
@@ -59,7 +59,7 @@ let RoomUpdate= () => {
 
     useEffect(() => {
         let getUpdate = async () => {
-            let resp = await axios.get('http://localhost:8080/room/showOne/' + roomId, {
+            let resp = await axios.get('http://localhost:8081/room/showOne/' + roomId, {
                 withCredentials: true
             })
             if (resp.status === 200) {

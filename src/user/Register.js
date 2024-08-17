@@ -27,7 +27,7 @@ let Register = () => {
     let onSubmit = async (e) => {
         e.preventDefault()
         try{
-            let resp =await axios.post('http://localhost:8080/user/register',inputs)
+            let resp =await axios.post('http://localhost:8081/user/register',inputs)
             console.log(resp.data.resultId)
             if(resp.data.resultId!==undefined) {
                 moveToNext()

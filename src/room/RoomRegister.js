@@ -60,7 +60,7 @@ let RoomRegister = () => {
 
 
         try {
-            let resp = await axios.post(`http://localhost:8080/room/write/${hotelId}`,inputs, {
+            let resp = await axios.post(`http://localhost:8081/room/write/${hotelId}`,inputs, {
 
                 headers: {
                     'Content-Type': 'application/json'

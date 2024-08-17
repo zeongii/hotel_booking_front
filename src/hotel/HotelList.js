@@ -17,7 +17,7 @@ let HotelList = () => {
     useEffect (() => {
         let showHotelList = async () => {
 
-            let resp = await axios.get('http://localhost:8080/hotel/hotelAll', {} )
+            let resp = await axios.get('http://localhost:8081/hotel/hotelAll', {} )
             if(resp.status === 200){
                 setData(resp.data)
             }

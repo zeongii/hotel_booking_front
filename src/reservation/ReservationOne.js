@@ -28,18 +28,17 @@ let ReservationOne = () => {
         e.preventDefault();
 
         try {
-            let resp = await axios.post(`http://localhost:8080/reservation/canceled/${reservationId}`,  {
+            let resp = await axios.post(`http://localhost:8081/reservation/canceled/${reservationId}`, {
                 data: data,
                 roomType: roomType,
                 reservationOne: reservationOne,
                 fileData: fileData
-            },{
+            }, {
                 withCredentials: true
             })
-            if (resp.data.enabled ===0) {
-                //예약 리스트로
-                nevigate(`/guest/myReservations/${reservationId}`)
-            }
+
+            nevigate('/hotel/hotelAll')
+
         } catch (error) {
             console.error(error)
         }
@@ -52,7 +51,7 @@ let ReservationOne = () => {
     useEffect(() => {
         let selectOne = async () => {
             try {
-                let resp = await axios.get('http://localhost:8080/reservation/showOne/' + reservationId, {
+                let resp = await axios.get('http://localhost:8081/reservation/showOne/' + reservationId, {
                     withCredentials: true
                 })
                 // 셀렉트 원에서 보낼 애들 확인해서 맞춰주기
@@ -83,7 +82,7 @@ let ReservationOne = () => {
                                 height: '100%' // 높이 조정 필요
                             }}>
                                 <img
-                                    src={`http://localhost:8080/room/${file.storedFileName}`}
+                                    src={`http://localhost:8081/room/${file.storedFileName}`}
                                     alt={file.originalFileName}
                                     style={{width: '600px', height: 'auto', alignItems: "center"}}
 

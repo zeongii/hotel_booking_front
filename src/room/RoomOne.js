@@ -37,7 +37,7 @@ let RoomOne = () => {
     useEffect(() => {
         let selectOne = async () => {
             try {
-                let resp = await axios.get('http://localhost:8080/room/showOne/' + roomId, {
+                let resp = await axios.get('http://localhost:8081/room/showOne/' + roomId, {
                     withCredentials: true
                 })
                 console.log(resp)
@@ -56,7 +56,7 @@ let RoomOne = () => {
     }, [])
 
     let onDelete = async () => {
-        let resp = await axios.get('http://localhost:8080/room/delete/' + roomId, {
+        let resp = await axios.get('http://localhost:8081/room/delete/' + roomId, {
             withCredentials: true
         })
 
@@ -84,7 +84,7 @@ let RoomOne = () => {
                                 height: '100%' // 높이 조정 필요
                             }}>
                                 <img
-                                    src={`http://localhost:8080/room/${file.storedFileName}`}
+                                    src={`http://localhost:8081/room/${file.storedFileName}`}
                                     alt={file.originalFileName}
                                     style={{width: '600px', height: 'auto', alignItems: "center"}}
 

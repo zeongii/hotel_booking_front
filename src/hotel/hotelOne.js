@@ -33,7 +33,7 @@ let HotelOne = () => {
     useEffect(()=> {
         let roomSelectList= async ()=> {
             try {
-                let resp = await axios.get("http://localhost:8080/room/showList/"+id,{
+                let resp = await axios.get("http://localhost:8081/room/showList/"+id,{
                     withCredentials:true
                 })
                 if(resp.status === 200) {
@@ -64,7 +64,7 @@ let HotelOne = () => {
                                     height: '100%' // 높이 조정 필요
                                 }}>
                                     <img
-                                        src={`http://localhost:8080/room/${roomImages}`}
+                                        src={`http://localhost:8081/room/${roomImages}`}
                                         alt={roomImages}
                                         style={{width: '600px', height: 'auto', alignItems: "center"}}
 
@@ -91,7 +91,7 @@ let HotelOne = () => {
 
             <Button onClick={roomInsert}>방 등록하기</Button>
 
-            <Table hover striped bordered className={"table-danger"}>
+            <Table hover striped bordered className={"table"}>
                 <thead>
                 <tr>
                     <td>방 사진</td>
