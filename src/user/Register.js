@@ -1,169 +1,89 @@
-import { Button, Container, FormControl, Table, Form } from "react-bootstrap";
-import { useState } from "react";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {Button, Container, FormControl, Table} from "react-bootstrap";
 
 let Register = () => {
-    let [inputs, setInputs] = useState({
-        name: '',
-        email:'',
+    let[inputs,setInputs] = useState({
+        email: '',
+        password:'',
+        nickname: '',
         phone: '',
-        password: '',
-        confirmPassword: '',
-        gender: '',
-        address: ''
-    });
-
+        address: '',
+        role: 'BUSINESS',
+        enabled: 1
+    })
+    let nevigate = useNavigate()
+    let moveToNext=(id) => {
+        nevigate('/')
+    }
     let onChange = (e) => {
-        let { name, value } = e.target;
+        let {name,value} = e.target
         setInputs({
             ...inputs,
             [name]: value
-        });
-    };
-
+        })
+    }
     let onSubmit = async (e) => {
-        e.preventDefault();
-
-        if (inputs.password !== inputs.confirmPassword) {
-            alert("비밀번호가 일치 하지 않습니다");
-            return;
-        }
-
-        try {
-            let response = await axios({
-                url: 'http://localhost:8080/user/register',
-                method: 'POST',
-                data: {
-                    name: inputs.name,
-                    email: inputs.email,
-                    phone: inputs.phone,
-                    password: inputs.password,
-                    gender: inputs.gender,
-                    address: inputs.address
-                }
-            });
-
-            if (response.status === 200 && response.data.result === 'success') {
-                alert('회원가입 완료');
+        e.preventDefault()
+        try{
+            let resp =await axios.post('http://localhost:8080/user/register',inputs)
+            console.log(resp.data.resultId)
+            if(resp.data.resultId!==undefined) {
+                moveToNext()
             }
-        } catch (error) {
-            console.error('회원가입 실패이유:', error);
+        } catch (error){
+            console.log(error)
         }
-    };
-
-    return (
-        <Container>
+    }
+    return(
+        <Container className={"mt-3"}>
             <form onSubmit={onSubmit}>
                 <Table striped hover bordered>
                     <thead>
                     <tr>
-                        <th colSpan={2}>회원가입</th>
+                        <td colSpan={2} className={"text-center"}>회원 가입하기</td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>이름</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="name"
-                                value={inputs.name}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
+                        <td>아이디</td>
+                        <td><FormControl type={'email'} value={inputs.email} name={'email'} className={"form-control"}
+                                         onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <th>email</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="email"
-                                value={inputs.email}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
+                        <td>비밀번호</td>
+                        <td><FormControl type={'password'} value={inputs.password} name={'password'}
+                                         className={"form-control"}
+                                         onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <th>전화번호</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="phone"
-                                value={inputs.phone}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
+                        <td>업체이름</td>
+                        <td><FormControl type={'text'} value={inputs.nickname} name={'nickname'}
+                                         className={"form-control"}
+                                         onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <th>비밀번호</th>
-                        <td>
-                            <FormControl
-                                type="password"
-                                name="password"
-                                value={inputs.password}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
+                        <td>전화번호</td>
+                        <td><FormControl type={'text'} value={inputs.phone} name={'phone'} className={"form-control"}
+                                         onChange={onChange}/></td>
                     </tr>
                     <tr>
-                        <th>비밀번호 확인</th>
-                        <td>
-                            <FormControl
-                                type="password"
-                                name="confirmPassword"
-                                value={inputs.confirmPassword}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td>
-                            <Form.Check
-                                type="radio"
-                                name="gender"
-                                value="male"
-                                label="남성"
-                                onChange={onChange}
-                                checked={inputs.gender === "male"}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="gender"
-                                value="female"
-                                label="여성"
-                                onChange={onChange}
-                                checked={inputs.gender === "female"}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td>
-                            <FormControl
-                                type="text"
-                                name="address"
-                                value={inputs.address}
-                                onChange={onChange}
-                                required
-                            />
-                        </td>
+                        <td>주소</td>
+                        <td><FormControl type={'text'} value={inputs.address} name={'address'}
+                                         className={"form-control"}
+                                         onChange={onChange}/></td>
                     </tr>
                     <tr>
                         <td colSpan={2}>
-                            <Button type="submit">회원가입</Button>
+                            <Button type={'submit'}>회원가입</Button>
                         </td>
                     </tr>
                     </tbody>
                 </Table>
             </form>
         </Container>
-    );
-};
+    )
+}
 
-export default Register;
+export default Register
