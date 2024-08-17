@@ -6,7 +6,6 @@ import Map from './Map';
 import travelingImage from './traveling.png';
 import style from './Hotel.module.css'
 import { AiFillHeart } from "react-icons/ai";
-import hotel from "../search/hotel";
 
 const HotelOne = () => {
     const navigate = useNavigate();
@@ -89,6 +88,8 @@ const HotelOne = () => {
         fetchHotelData();
     }, [id]);
 
+
+
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
@@ -120,7 +121,7 @@ const HotelOne = () => {
                             }}>
                                 <img
                                     src={`http://localhost:8080/hotel/${file.storedFileName}`}
-                                    alt={file.originalFileName}
+                                    alt={`http://localhost:8080/hotel/${file.storedFileName}`}
                                     style={{
                                         width: '600px',
                                         height: 'auto',

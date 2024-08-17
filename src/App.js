@@ -25,6 +25,7 @@ import Auth1 from "./user/Auth1";
 import HotelInsert from "./hotel/HotelInsert";
 import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelUpdate from "./hotel/HotelUpdate";
+import Auth from "./user/Auth";
 
 function ShowList() {
     return null;
@@ -35,8 +36,9 @@ function App() {
         <div style={{marginTop: '100px', marginBottom: '60px'}}>
             <Routes>
                 <Route path="/" element={<SearchHotel/>}/>
-                <Route path="/Map" element={<Map/>}/>
+                <Route path="/Map/:address" element={<Map/>}/>
                 <Route path="/jisu" element={<Auth1/>}/>
+                <Route path="/auth" element={<Auth/>}/>
                 <Route path="/business/register" element={<Register/>}/>
                 <Route path="/guest/forgotEmail" element={<ForgotEmail/>}/>
                 <Route path="/guest/forgotPassword" element={<ForgotPassword/>}/>

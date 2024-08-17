@@ -28,6 +28,7 @@ export const Map = ({ address }) => {
                 if (status === kakao.maps.services.Status.OK) {
                     const { x, y } = result[0].address;
                     const position = new kakao.maps.LatLng(y, x);
+                    console.log(address)
 
                     // 기존 마커가 있을 경우 제거
                     if (marker) {
@@ -48,8 +49,10 @@ export const Map = ({ address }) => {
                     map.setCenter(position);
                 } else {
                     console.error('주소 변환 실패:', status);
+                    // 주소 변환 실패 시, 기본 좌표로 이동
+                    map.setCenter(new kakao.maps.LatLng(37.5665, 126.978)); // 서울 시청 기본 좌표
                 }
-            });
+            } );
         }
     }, [address, map]); // map과 address가 변경될 때마다 실행
 

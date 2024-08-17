@@ -12,8 +12,8 @@ let HotelImgInsert = () => {
 
     let navigate = useNavigate();
 
-    let moveToNext = () => {
-        navigate('/hotelOne/' + id);
+    const moveToNext = () => {
+        navigate('/hotelOne/' + id, { state: { refresh: true } });
     };
 
 
@@ -57,7 +57,8 @@ let HotelImgInsert = () => {
         })
             .then((response) => {
                 console.log('Response:', response.data);
-                moveToNext();
+                const insertImg = response.data
+                navigate('/hotelOne/' + id, { state: { refresh: true } });
             })
             .catch((error) => {
                 console.error('Error:', error);
