@@ -13,6 +13,7 @@ const SearchHotel = () => {
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState();
     const [peopleCount, setPeopleCount] = useState(1);
+    const [searchDone, setSearchDone] = useState(false); // 검색 완료 여부 상태 추가
 
     let [searchParams, setSearchParams] = useState({
         grade: [],
@@ -675,8 +676,8 @@ const SearchHotel = () => {
                     <th>등급</th>
                 </tr>
                 </thead>
-                <tbody>
 
+                <tbody>
                 {hotelArr.map(hotel => (
                     <tr key={hotel.id}>
                         <td></td>
@@ -694,10 +695,8 @@ const SearchHotel = () => {
                 {/*{data.roomList.map(r => (*/}
                 {/*    <TableRow room={r} key={r.id} moveToSingle={moveToSingle}/>*/}
                 {/*))}*/}
-
                 </tbody>
             </Table>
-
 
         </Container>
     );

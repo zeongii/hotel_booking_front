@@ -24,7 +24,7 @@ let ForgotEmail = () => {
 
         try {
             let response = await axios({
-                url: 'http://localhost:8081/user/forgot-username',
+                url: 'http://localhost:8080/guest/forgot-username',
                 method: 'POST',
                 data: {
                     name: inputs.name,
