@@ -1,24 +1,24 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom";
 import Auth from "./user/Auth";
+import RoomOne from "./room/RoomOne";
+import Register from "./user/Register";
+import Map from "./hotel/Map"
 import ForgotEmail from "./user/ForgotEmail";
 import ForgotPassword from "./user/ForgotPassword";
-import Register from "./user/Register";
 import SearchHotel from "./search/hotel";
-import HotelOne from "./hotel/hotelOne";
-import RoomRegister from "./room/RoomRegister";
 import HotelList from "./hotel/HotelList";
-import RoomOne from "./room/RoomOne";
-import RoomUpdate from "./room/RoomUpdate";
+import HotelOne from "./hotel/hotelOne";
+import HotelInsert from "./hotel/HotelInsert";
+import HotelImgInsert from "./hotel/HotelImgInsert";
+import HotelUpdate from "./hotel/HotelUpdate";
+import RoomRegister from "./room/RoomRegister";
 import RoomImgInsert from "./room/RoomImgInsert";
+import RoomUpdate from "./room/RoomUpdate";
 import RoomReservation from "./reservation/RoomReservation";
 import ReservationOne from "./reservation/ReservationOne";
 import NotFound from "./NotFound";
-import HotelImgInsert from "./hotel/HotelImgInsert";
-import HotelInsert from "./hotel/HotelInsert";
-import Map from "./hotel/Map";
-import Header from "./Header";
-import HotelUpdate from "./hotel/HotelUpdate";
+
 
 
 function App() {
@@ -36,8 +36,6 @@ function App() {
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>
                 <Route path="/hotelUpdate/:id" element={<HotelUpdate/>}/>
-                <Route path="/hotel/hotelAll" element={<HotelList/>}/>
-                <Route path="/hotel/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/room/register/:hotelId" element={<RoomRegister/>}/>
                 <Route path="/room/roomImgInsert/:id" element={<RoomImgInsert/>}/>
                 <Route path="/room/roomOne/:roomId" element={<RoomOne/>}/>

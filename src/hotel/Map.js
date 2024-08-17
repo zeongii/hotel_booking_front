@@ -14,7 +14,6 @@ export const Map = ({ address }) => {
             level: 3, // 지도 확대 레벨
         };
 
-        // 지도 생성
         const mapInstance = new kakao.maps.Map(container.current, options);
         setMap(mapInstance);
     }, []);

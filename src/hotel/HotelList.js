@@ -57,13 +57,13 @@ let HotelList = () => {
                                     </Carousel.Item>
                                 ))
                             ) : (
-                                    <div style={styles.imageContainer}>
-                                        <Card.Img
-                                            src={travelingImage}
-                                            alt="기본 이미지"
-                                            style={styles.image}
-                                        />
-                                    </div>
+                                <div style={styles.imageContainer}>
+                                    <Card.Img
+                                        src={travelingImage}
+                                        alt="기본 이미지"
+                                        style={styles.image}
+                                    />
+                                </div>
                             )}
                         </Carousel>
 
@@ -81,7 +81,7 @@ let HotelList = () => {
                 <Button onClick={moveInsert}>호텔 추가</Button>
             </div>
         </Container>
-)
+    )
 
 }
 const styles = {

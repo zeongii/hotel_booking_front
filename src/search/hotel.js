@@ -97,7 +97,7 @@ const SearchHotel = () => {
         console.log('잘 받고 있니?:', searchParams);
 
         try {
-            const response = await axios.post('http://localhost:8081/search/hotel', searchParams);
+            const response = await axios.post('http://localhost:8080/search/hotel', searchParams);
             const responseHotelDtoList = response.data.hotelDtoList;
             console.log(responseHotelDtoList);
             console.log(response.data.peopleCount);

@@ -36,8 +36,8 @@ let RoomImgInsert = () => {
         formData.append("id", id);
         console.log('id:', id);
         console.log('fd:', formData);
-        axios.post('http://localhost:8081/room/imgInsert/' + id, formData, {
-            baseURL: 'http://localhost:8081'
+        axios.post('http://localhost:8080/room/imgInsert/' + id, formData, {
+            baseURL: 'http://localhost:8080'
         })
             .then((response) => {
                 console.log('Response:', response.data);

@@ -33,7 +33,7 @@ let Auth = () => {
         console.log(inputs)
 
         let response = await axios({
-            url: 'http://localhost:8081/user/auth',
+            url: 'http://localhost:8080/user/auth',
             method: 'POST',
             data: formData,
             withCredentials: true
@@ -45,7 +45,7 @@ let Auth = () => {
                 nickname: response.data.nickname,
                 role: response.data.role
             }
-            navigate('/hotel/hotelAll', {state: {userInfo: userInfo}});
+            navigate('/hotelAll', {state: {userInfo: userInfo}});
         }
     }
 
@@ -79,7 +79,7 @@ let Auth = () => {
                         <tr>
                             <td>
                                 <Button type={'submit'} style={button}>로그인</Button>
-                                    &emsp;  &emsp;  &emsp;  &emsp;
+                                &emsp;  &emsp;  &emsp;  &emsp;
                                 <Button onClick={onRegister} style={button}>회원가입</Button>
                             </td>
                         </tr>
