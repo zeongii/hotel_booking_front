@@ -1,6 +1,8 @@
-import { Button, Container, FormControl, Table } from "react-bootstrap";
-import { useState } from "react";
+import {Button, Container, FormControl, Table} from "react-bootstrap";
+import {useState} from "react";
 import axios from "axios";
+import style from './User.module.css'
+
 
 let ForgotEmail = () => {
     let [inputs, setInputs] = useState({
@@ -10,7 +12,7 @@ let ForgotEmail = () => {
     let [error, setError] = useState(null);
 
     let onChange = (e) => {
-        let { name, value } = e.target;
+        let {name, value} = e.target;
         setInputs({
             ...inputs,
             [name]: value
@@ -99,5 +101,11 @@ let ForgotEmail = () => {
         </Container>
     );
 };
+
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
+};
+
 
 export default ForgotEmail;

@@ -3,20 +3,21 @@ import React, {useState} from "react";
 import {Button, Container, FormCheck, FormControl, Table} from "react-bootstrap";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import style from './reg.module.css'
 
 
 let RoomReservation = () => {
 
     let parms = useParams()
-    let roomId=parseInt(parms.roomId);
+    let roomId = parseInt(parms.roomId);
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState();
 
 
     let [inputs, setInputs] = useState({
-        startDate:'',
-        endDate:'',
-        isBreakfast:'',
+        startDate: '',
+        endDate: '',
+        isBreakfast: '',
         enabled: 1
     });
 
@@ -38,8 +39,8 @@ let RoomReservation = () => {
     let onSubmit = async (e) => {
         e.preventDefault();
 
-        try{
-            let resp = await axios.post(`http://localhost:8080/reservation/roomReservation/${roomId}`,inputs, {
+        try {
+            let resp = await axios.post(`http://localhost:8080/reservation/roomReservation/${roomId}`, inputs, {
                 withCredentials: true
             });
 

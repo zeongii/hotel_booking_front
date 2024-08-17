@@ -1,11 +1,11 @@
-import { useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
+import style from './Room.module.css'
 
 
-
-let RoomUpdate= () => {
+let RoomUpdate = () => {
     let parms = useParams()
     let roomId = parms.roomId
 
@@ -70,6 +70,7 @@ let RoomUpdate= () => {
     }, [])
 
     return (
+        <div className={style.roomInsertContainer}>
             <Container className={"mt-3"}>
                 <form onSubmit={onSubmit}>
                     <Table striped hover bordered>
@@ -141,7 +142,7 @@ let RoomUpdate= () => {
                                     onChange={onChange}/>
                             </td>
                         </tr>
-                       {/* <tr>
+                        {/* <tr>
                             <td>체크인</td>
                             <td>
                                 <FormControl
@@ -172,6 +173,7 @@ let RoomUpdate= () => {
                     </Table>
                 </form>
             </Container>
+        </div>
     )
 
 
