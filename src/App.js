@@ -23,15 +23,15 @@ import NotFound from "./NotFound";
 
 function App() {
     return (
-        <div>
+        <div style={{marginTop: '100px', marginBottom: '60px'}}>
             <Routes>
-                <Route path="/" element={<Auth/>}/>
+                <Route path="/" element={<HotelList/>}/>
                 <Route path="/Map" element={<Map/>}/>
+                <Route path="/user/auth" element={<Auth/>}/>
                 <Route path="/user/register" element={<Register/>}/>
                 <Route path="/user/forgotEmail" element={<ForgotEmail/>}/>
                 <Route path="/user/forgotPassword" element={<ForgotPassword/>}/>
                 <Route path="/search/hotel" element={<SearchHotel/>}/>
-                <Route path="/hotelAll" element={<HotelList/>}/>
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>

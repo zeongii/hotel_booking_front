@@ -1,7 +1,7 @@
 import React from "react";
-import styles from './Header.module.css';
-import logo from './logo.png'
-import login from './logIn.png'
+import styles from '../layout.module.css';
+import logo from '../logo.png'
+import login from '../logIn.png'
 
 const Header = () => {
     return (

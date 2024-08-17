@@ -45,7 +45,7 @@ let Auth = () => {
                 nickname: response.data.nickname,
                 role: response.data.role
             }
-            navigate('/hotelAll', {state: {userInfo: userInfo}});
+            navigate('/', {state: {userInfo: userInfo}});
         }
     }
 
