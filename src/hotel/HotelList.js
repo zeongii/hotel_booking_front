@@ -34,15 +34,10 @@ let HotelList = () => {
             if (resp.status === 200) {
                 setData(resp.data)
                 console.log(resp.data)
-
-
             }
-
         }
-
         showHotelList()
     }, [])
-
     return (
         <Container className={"mb-100"}>
             <div style={styles.cardContainer}>

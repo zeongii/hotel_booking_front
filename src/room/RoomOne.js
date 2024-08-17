@@ -90,8 +90,13 @@ let RoomOne = () => {
                                             <img
                                                 src={`http://localhost:8080/room/${file.storedFileName}`}
                                                 alt={file.originalFileName}
-                                                style={{width: '500px', height: '400px', alignItems: "center", border: '1px solid #9ec2fc',
-                                                    borderRadius: '10px',}}
+                                                style={{
+                                                    width: '500px',
+                                                    height: '400px',
+                                                    alignItems: "center",
+                                                    border: '1px solid #9ec2fc',
+                                                    borderRadius: '10px',
+                                                }}
 
                                             />
                                         </div>
@@ -144,18 +149,13 @@ let RoomOne = () => {
                                 <td colSpan={3}>{data.breakfastPrice}</td>
                             </tr>
                             <tr className={"text-center"}>
-                                <td> <Button onClick={moveToReservation} style={button}>예약하기</Button></td>
+                                <td><Button onClick={moveToReservation} style={button}>예약하기</Button></td>
                             </tr>
                             </tbody>
                         </Table>
                     </div>
                     <Button onClick={goBack} style={button}>뒤로 가기</Button>
-
                 </div>
-
-
-
-
                 <Table>
                     <tbody>
                     <tr>

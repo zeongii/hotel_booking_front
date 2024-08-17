@@ -33,7 +33,7 @@ let Auth = () => {
         console.log(inputs)
 
         let response = await axios({
-            url: 'http://localhost:8080/user/auth',
+            url: 'http://localhost:8081/user/auth',
             method: 'POST',
             data: formData,
             withCredentials: true

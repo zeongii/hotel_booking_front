@@ -24,7 +24,7 @@ let ForgotPassword = () => {
 
         try {
             let response = await axios({
-                url: 'http://localhost:8080/user/forgot-password',
+                url: 'http://localhost:8081/user/forgot-password',
                 method: 'POST',
                 data: {
                     email: inputs.email,

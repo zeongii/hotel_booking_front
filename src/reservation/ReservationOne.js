@@ -17,15 +17,33 @@ let ReservationOne = () => {
     let [fileData, setFileData] = useState([]) // 룸 파일 리스트
     const [roomIndex, setRoomIndex] = useState(0)
 
+
     const handleSelect = (selectedIndex) => {
         setRoomIndex(selectedIndex)
     }
 
     let nevigate = useNavigate()
 
-    let onCancled = () => {
+    let onCancled = async (e) => {
+        e.preventDefault();
+
+        try {
+            let resp = await axios.post(`http://localhost:8081/reservation/canceled/${reservationId}`, {
+                data: data,
+                roomType: roomType,
+                reservationOne: reservationOne,
+                fileData: fileData
+            }, {
+                withCredentials: true
+            })
+
+            nevigate('/hotel/hotelAll')
+
+        } catch (error) {
+            console.error(error)
+        }
         // 나중에 호텔 검색 페이지로 넘겨야함
-        nevigate('/hotel/hoteOne/1')
+
     }
 
     let message = reservationOne.isBreakfast === 1 ? "조식 포함" : "조식 미포함";
@@ -33,7 +51,7 @@ let ReservationOne = () => {
     useEffect(() => {
         let selectOne = async () => {
             try {
-                let resp = await axios.get('http://localhost:8080/reservation/showOne/' + reservationId, {
+                let resp = await axios.get('http://localhost:8081/reservation/showOne/' + reservationId, {
                     withCredentials: true
                 })
                 // 셀렉트 원에서 보낼 애들 확인해서 맞춰주기
@@ -55,7 +73,7 @@ let ReservationOne = () => {
         <Container>
             <Row className={'justify-content-center'}>
                 <Carousel activeIndex={roomIndex} onSelect={handleSelect} className="carousel-container">
-                    {fileData.map((file)=> (
+                    {fileData.map((file) => (
                         <Carousel.Item key={file.storedFileName}>
                             <div style={{
                                 display: 'flex',
@@ -64,7 +82,7 @@ let ReservationOne = () => {
                                 height: '100%' // 높이 조정 필요
                             }}>
                                 <img
-                                    src={`http://localhost:8080/room/${file.storedFileName}`}
+                                    src={`http://localhost:8081/room/${file.storedFileName}`}
                                     alt={file.originalFileName}
                                     style={{width: '600px', height: 'auto', alignItems: "center"}}
 
@@ -73,7 +91,7 @@ let ReservationOne = () => {
                         </Carousel.Item>
                     ))}
                 </Carousel>
-                <Navbar expand="lg" className="bg-body-tertiary" >
+                <Navbar expand="lg" className="bg-body-tertiary">
                     <Container className=".nav-container">
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="basic-navbar-nav">
@@ -107,14 +125,28 @@ let ReservationOne = () => {
                         <td colSpan={3}>조식 가격: {data.breakfastPrice}</td>
                     </tr>
                     <tr>
-                        <td colSpan={3}>체크인: {reservationOne.startDate}</td>
+                        <td colSpan={3}>
+                            체크인: {new Date(reservationOne.startDate).toLocaleDateString('ko-KR')}
+                        </td>
                     </tr>
                     <tr>
-                        <td colSpan={3}>체크아웃: {reservationOne.endDate}</td>
+                        <td colSpan={3}>
+                            체크아웃: {new Date(reservationOne.endDate).toLocaleDateString('ko-KR')}
+                        </td>
                     </tr>
                     <tr>
                         <td colSpan={3}>조식 여부:
                             {message}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>가격:
+                            {reservationOne.payPrice}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>예약번호
+                            {reservationOne.reservationNumber}
                         </td>
                     </tr>
                     <tr>

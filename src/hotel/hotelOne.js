@@ -6,7 +6,6 @@ import Map from './Map';
 import travelingImage from './traveling.png';
 import style from './Hotel.module.css'
 
-
 const HotelOne = () => {
     const navigate = useNavigate();
     const params = useParams();

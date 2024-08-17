@@ -1,7 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useState} from "react";
+import React, {useState} from "react";
 import {Button, Container, FormCheck, FormControl, Table} from "react-bootstrap";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import style from './reg.module.css'
 
 
@@ -9,6 +10,9 @@ let RoomReservation = () => {
 
     let parms = useParams()
     let roomId = parseInt(parms.roomId);
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState();
+
 
     let [inputs, setInputs] = useState({
         startDate: '',
@@ -20,7 +24,7 @@ let RoomReservation = () => {
     let nevigate = useNavigate();
 
     let moveToNext = (reservationId) => {
-        nevigate(`/reservation/reservationOne/${reservationId}`)
+        nevigate(`/reservation/roomReservationOne/${reservationId}`)
     }
 
     let onChange = (e) => {
@@ -50,64 +54,84 @@ let RoomReservation = () => {
     }
 
     return (
-        <div className={style.regContainer}>
-            <Container >
-                <form onSubmit={onSubmit}>
-                    <Table hover >
-                        <thead>
-                        <tr>
-                            <td colSpan={2} className={"text-center"}>객실 예약하기</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>체크인 날짜
-                                <FormControl
-                                    type={'date'}
-                                    value={inputs.startDate}
-                                    name={'startDate'}
-                                    onChange={onChange}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>체크아웃 날짜
-                                <FormControl
-                                    type={'date'}
-                                    value={inputs.endDate}
-                                    name={'endDate'}
-                                    onChange={onChange}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>조식 선택
-                                <FormCheck
-                                    type={'radio'}
-                                    label={'예'}
-                                    value={1}
-                                    name={'isBreakfast'}
-                                    onChange={onChange}
-                                />
-                                <FormCheck
-                                    type={'radio'}
-                                    label={'아니오'}
-                                    value={0}
-                                    name={'isBreakfast'}
-                                    onChange={onChange}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2} className={'text-center'}>
-                                <Button type={'submit'}>
-                                    예약하기
-                                </Button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </Table>
-                </form>
-            </Container>
-        </div>
+        <Container className={"mt-3"}>
+            <form onSubmit={onSubmit}>
+                <Table striped hover bordered>
+                    <thead>
+                    <tr>
+                        <td colSpan={2} className={"text-center"}>객실 예약하기</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>체크인 날짜</td>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={new Date()}
+                                selected={startDate}
+                                value={startDate}
+                                placeholderText='시작 날짜'
+                                onChange={(date) => {
+                                    setStartDate(date);
+                                    setInputs({
+                                        ...inputs,
+                                        startDate: date
+                                    })
+                                }}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>체크아웃 날짜</td>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={Math.max(inputs.startDate, new Date())}
+                                selected={inputs.endDate}
+                                placeholderText='마지막 날짜'
+                                onChange={(date) => {
+                                    setEndDate(date);
+                                    setInputs({
+                                        ...inputs,
+                                        endDate: date
+                                    })
+                                }}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>조식 선택</td>
+                        <td>
+                            <FormCheck
+                                type={'radio'}
+                                label={'예'}
+                                value={1}
+                                name={'isBreakfast'}
+                                onChange={onChange}
+                            />
+                            <FormCheck
+                                type={'radio'}
+                                label={'아니오'}
+                                value={0}
+                                name={'isBreakfast'}
+                                onChange={onChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                    <td colSpan={2} className={'text-center'}>
+                            <Button type={'submit'}>
+                                예약하기
+                            </Button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </Table>
+            </form>
+        </Container>
 
     )
 
