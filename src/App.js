@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import Auth from "./user/Auth";
 import RoomOne from "./room/RoomOne";
@@ -25,9 +25,17 @@ import Auth1 from "./user/Auth1";
 import HotelImgInsert from "./hotel/HotelImgInsert";
 import HotelInsert from "./hotel/HotelInsert";
 import HotelUpdate from "./hotel/HotelUpdate";
+import UserList from "./admin/UserList";
+import DashBoard from "./admin/DashBoard";
+import UserDetails from "./admin/UserDetails";
+import HotelDetails from "./admin/HotelDetails";
 
-function App() {
+
+
+const App = ({setUserInfo})  => {
+
     return (
+
         <div style={{marginTop: '100px', marginBottom: '60px'}}>
             <Routes>
                 <Route path="/" element={<SearchHotel/>}/>
@@ -45,10 +53,20 @@ function App() {
                 <Route path="/guest/myReservations/:id" element={<MyReservations/>}/>
                 <Route path="/guest/wishlist/:id" element={<Wishlist/>}/>
 
+                <Route path="/" element={<Auth setUserInfo={setUserInfo} />} />
+                <Route path="/admin/userList" element={<UserList />} />
+                {/*<Route path="/" element={<Auth/>}/>*/}
+                <Route path="/user/Register" element={<Register/>}/>
+                <Route path="/admin/userList" element={<UserList/>}/>
+                <Route path="/admin/hotelList" element={<HotelList/>}/>
+                <Route path="/admin/" element={<DashBoard/>}/>
+                <Route path="/admin/userdetails/:id" element={<UserDetails/>}/>
+                <Route path="/admin/hoteDetails/:id" element={<HotelDetails/>}/>
+
                 <Route path="/Map" element={<Map/>}/>
 
 
-                <Route path="/hotel/showList" element={<ShowList/>}/>
+                <Route path="/hotel/showList" element={<HotelList/>}/>
 
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
