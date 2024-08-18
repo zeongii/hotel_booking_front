@@ -1,0 +1,153 @@
+.user-list-container {
+    max-width: 800px;
+    margin: 0 auto; /* 페이지 가운데로 정렬 */
+    font-family: 'Arial', sans-serif;
+}
+
+.user-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+    table-layout: fixed;
+}
+
+.user-list-table th, .user-list-table td {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    text-align: center;
+}
+
+.user-list-table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.user-list-table td {
+    background-color: #fff;
+    color: #333;
+}
+
+.user-list-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.user-list-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-list-table a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.user-list-table a:hover {
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* 네비게이션 바 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between; /* 제목과 로그아웃 버튼 양쪽 끝으로 배치 */
+    align-items: center; /* 수직 정렬 */
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.header .current-user-info {
+    font-size: 14px;
+    color: #333;
+}
+
+/* 버튼 스타일 */
+button, .btn {
+    padding: 8px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #0056b3;
+}
+
+button.cancel-button {
+    background-color: #dc3545;
+}
+
+button.cancel-button:hover {
+    background-color: #c82333;
+}
+
+/* 입력 필드 스타일 */
+.input-group, .form-control {
+    margin-bottom: 10px;
+}
+
+.form-control {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: calc(100% - 24px);
+}
+
+.form-select {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+.back-button {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px; /* 버튼과 검색창 사이의 간격 */
+}
