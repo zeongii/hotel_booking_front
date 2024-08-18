@@ -1,4 +1,4 @@
-import notFound from './notFound.png'
+import notFound from './assets/images/notFound.png'
 import React from "react";
 
 let NotFound = () => {

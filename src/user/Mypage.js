@@ -55,11 +55,16 @@ const MyPage = () => {
                 </tr>
                 </tbody>
             </Table>
-            <Button onClick={handleEditProfile}>수정하기</Button>{' '}
-            <Button onClick={handleViewWishlist}>찜 목록 </Button> {' '}
-            <Button onClick={handleViewReservations}>예약목록</Button>
+            <Button  style={button} onClick={handleEditProfile}>수정하기</Button>{' '}
+            <Button  style={button} onClick={handleViewWishlist}>찜 목록 </Button> {' '}
+            <Button style={button} onClick={handleViewReservations}>예약목록</Button>
         </Container>
-    );
+    )
+
+};
+const button = {
+    backgroundColor: '#9ec2fc',
+    borderColor: '#9ec2fc',
 };
 
 export default MyPage;
