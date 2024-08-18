@@ -1,0 +1,53 @@
+.hotelContainer {
+    display: flex;
+    align-items: flex-start;
+    border: 2px solid #d1e6ff;
+    border-radius: 5px;
+    padding: 30px;
+
+}
+
+.hotelInsertContainer {
+    display: flex;
+    align-items: center;
+    border: 10px solid #d1e6ff;
+    border-radius: 5px;
+    margin-left: 250px;
+    width: 800px;
+
+}
+
+.hotelInfo {
+    max-width: 200px;
+    margin-left: 50px;
+}
+
+.hotelMap {
+    margin-left: 500px;
+    justify-content: end;
+    flex: 1;
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.card {
+    width: 15rem;
+    box-sizing: border-box;
+}
+
+.room {
+    display: flex;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 2px solid #d1e6ff;
+    border-radius: 5px;
+}
+
+.heart {
+    color: red;
+}

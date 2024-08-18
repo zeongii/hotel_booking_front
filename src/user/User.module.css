@@ -1,0 +1,10 @@
+.register {
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    border: 5px solid #d1e6ff;
+    border-radius: 5px;
+    margin-left: 250px;
+    width: 800px;
+
+}
