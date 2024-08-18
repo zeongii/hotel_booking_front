@@ -69,6 +69,6 @@ const App = ({ setUserInfo }) => {
             </Routes>
         </div>
     );
-};
+}
 
 export default App;
