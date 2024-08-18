@@ -5,7 +5,7 @@ import axios from "axios";
 import Map from './Map';
 import travelingImage from './traveling.png';
 import style from './Hotel.module.css'
-import { AiFillHeart } from "react-icons/ai";
+import {AiFillHeart} from "react-icons/ai";
 
 const HotelOne = () => {
     const navigate = useNavigate();
@@ -47,22 +47,22 @@ const HotelOne = () => {
     const handleSelect = (selectedIndex) => setRoomIndex(selectedIndex);
     const handleHotelSelect = (selectedIndex) => setIndex(selectedIndex);
 
-    const roomInsert = (hotelId) => navigate(`/room/register/${hotelId}`);
-    const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`);
+    const roomInsert = (hotelId) => navigate(`/room/register/${hotelId}`, {state: {userInfo: userInfo}});
+    const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`, {state: {userInfo: userInfo}});
     const onDelete = async () => {
         const resp = await axios.get(`http://localhost:8080/hotel/delete/${id}`);
         if (resp.status === 200) {
-            navigate('/hotelAll');
+            navigate('//hotel/showList', {state: {userInfo: userInfo}});
         }
     };
 
     const onUpdate = () => {
-        navigate('/hotelUpdate/' + id)
+        navigate('/hotelUpdate/' + id, {state: {userInfo: userInfo}})
     }
 
-    let [wish, setWish] = useState( {
-        hotelId: id ,
-        guestId: 1
+    let [wish, setWish] = useState({
+        hotelId: id,
+        guestId: userInfo.id
     })
 
     const [isWished, setIsWished] = useState(() => {
@@ -72,10 +72,9 @@ const HotelOne = () => {
     });
 
 
-
     const wishList = async () => {
         try {
-            const resp = await axios.post('http://localhost:8080/guest/wishlist', wish);
+            const resp = await axios.post('http://localhost:8080/guest/wishlist', wish, {state: {userInfo: userInfo}});
 
             console.log(resp.data);
             console.log(wish)
@@ -97,7 +96,6 @@ const HotelOne = () => {
         };
         fetchHotelData();
     }, [id]);
-
 
 
     useEffect(() => {
@@ -168,8 +166,16 @@ const HotelOne = () => {
                 )}
             </Carousel>
             <h1 className="mb-5">{hotelData.hotelName}
-                <AiFillHeart onClick={wishList}  style={{ cursor: 'pointer', fontSize: '45px', color: isWished ? 'red' : 'lightgray' }}/>
 
+                <AiFillHeart onClick={wishList}
+                             style={{cursor: 'pointer', fontSize: '45px', color: isWished ? 'red' : 'lightgray'}}/>
+                &emsp; &emsp;
+                {hotelData.userId === userInfo.id && (
+                    <>
+                        <Button onClick={onDelete} style={button}>호텔 삭제</Button> &emsp;
+                        <Button onClick={onUpdate} style={button}>호텔 수정</Button> &emsp;
+                    </>
+                )}
             </h1>
             <div className={style.hotelContainer}>
                 <div className={style.hotelInfo}>
@@ -180,6 +186,12 @@ const HotelOne = () => {
 
                 <div className={style.hotelMap}><Map address={hotelData.address}/></div>
 
+            </div>
+
+            <div style={{ marginTop: '50px' }}>
+                {hotelData.userId === userInfo.id && (
+                    <Button onClick={roomInsert} style={button}>방 등록하기</Button>
+                )}
             </div>
 
 
@@ -228,14 +240,10 @@ const HotelOne = () => {
                     ))
                 ) : (
                     <div className={style.room}>
-                            <h2>No rooms are registered</h2>
+                        <h2>No rooms are registered</h2>
                     </div>
                 )}
             </div>
-
-            <Button onClick={roomInsert} style={button}>방 등록하기</Button>
-            <Button onClick={onDelete} style={button}>호텔 삭제</Button>
-            <Button onClick={onUpdate} style={button}>호텔 수정</Button>
 
         </Container>
     );

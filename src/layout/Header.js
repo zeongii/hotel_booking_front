@@ -66,9 +66,21 @@ const Header = ({userInfo, setUserInfo}) => {
                         ) : (
                             <>
                                 <li className={styles.navItem}>
-                                    <Link to={`/guest/mypage/${userInfo.id}`} state={{userInfo}}>
-                                        <img src={mypage} alt="마이페이지" style={{width: '30px'}}/>
-                                    </Link>
+                                    {userInfo.role === 'GUEST' && (
+                                        <Link to={`/guest/mypage/${userInfo.id}`} state={{userInfo}}>
+                                            <img src={mypage} alt="마이페이지" style={{width: '30px'}}/>
+                                        </Link>
+                                    )}
+                                    {userInfo.role === 'BUSINESS' && (
+                                        <Link to={`/business/mypage/${userInfo.id}`} state={{userInfo}}>
+                                            <img src={mypage} alt="마이페이지" style={{width: '30px'}}/>
+                                        </Link>
+                                    )}
+                                    {userInfo.role === 'ADMIN' && (
+                                        <Link to={`/admin/mypage/${userInfo.id}`} state={{userInfo}}>
+                                            <img src={mypage} alt="마이페이지" style={{width: '30px'}}/>
+                                        </Link>
+                                    )}
                                 </li>
 
                                 <li className={styles.navItem} onClick={handleLogout}>

@@ -29,7 +29,7 @@ let Register = () => {
         e.preventDefault()
         try{
             let resp =await axios.post('http://localhost:8080/user/register',inputs)
-            console.log(resp.data.resultId)
+            console.log(resp.data)
             if(resp.data.resultId!==undefined) {
                 moveToNext()
             }

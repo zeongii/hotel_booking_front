@@ -715,7 +715,6 @@ const styles = {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '1rem',
-        justifyContent: 'space-between',
     },
     card: {
         width: '18rem',

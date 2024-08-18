@@ -154,7 +154,6 @@ let RoomOne = () => {
                             </tbody>
                         </Table>
                     </div>
-                    <Button onClick={goBack} style={button}>뒤로 가기</Button>
                 </div>
                 <Table>
                     <tbody>

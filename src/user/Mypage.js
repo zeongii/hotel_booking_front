@@ -46,7 +46,7 @@ const MyPage = () => {
                     <td>{userInfo.nickname}</td>
                 </tr>
                 <tr>
-                    <th>역할</th>
+                    <th>등급</th>
                     <td>{userInfo.role}</td>
                 </tr>
                 <tr>

@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import travelingImage from './traveling.png';
+import axios from "axios";
+import {Button, Card, Carousel, Container} from "react-bootstrap";
+import travelingImage from "./traveling.png";
 
-let HotelList = () => {
+let MyHotel = () => {
 
     let [data, setData] = useState({hotelList: []})
 
@@ -33,6 +32,7 @@ let HotelList = () => {
 
             let resp = await axios
                 .get('http://localhost:8080/hotel/hotelAll', {})
+            console.log(userInfo)
             console.log(resp)
             if (resp.status === 200) {
                 setData(resp.data)
@@ -43,8 +43,11 @@ let HotelList = () => {
     }, [])
     return (
         <Container className={"mb-100"}>
+
             <div style={styles.cardContainer}>
-                {data.hotelList.map((h) => (
+                {data.hotelList
+                    .filter(h => h.userId === userInfo.id) // 필터링을 추가
+                    .map(h =>
                     <Card style={{width: '18rem'}}>
                         <Carousel activeIndex={hotelIndex} onSelect={handleSelect} className="carousel-container">
                             {h.imageList.length > 0 ? (
@@ -78,10 +81,7 @@ let HotelList = () => {
                             <Button style={button}>예약하러 가기</Button>
                         </Card.Body>
                     </Card>
-                ))}
-            </div>
-            <div>
-                <Button onClick={moveInsert}>호텔 추가</Button>
+                )}
             </div>
         </Container>
     )
@@ -126,4 +126,4 @@ const button = {
 };
 
 
-export default HotelList
+export default MyHotel

@@ -37,6 +37,8 @@ let Auth = ({setUser}) => {
                 withCredentials: true
             }, []);
 
+            console.log(response)
+
             if (response.status === 200 && response.data.result === 'success') {
                 let userInfo = {
                     id: response.data.id,
@@ -51,6 +53,10 @@ let Auth = ({setUser}) => {
                     userTotalAmount: response.data.userTotalAmount
 
                 };
+                if (response.data.role === 'BUSINESS') {
+                    setErrorMessage('BUSINESS 사용자로는 GUEST 로그인 페이지에 접근할 수 없습니다.');
+                    return;
+                }
                 setUser(userInfo);
                 navigate('/', {state: {userInfo: userInfo}}); // 메인페이지로 이동
 

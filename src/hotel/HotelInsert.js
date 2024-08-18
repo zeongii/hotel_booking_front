@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Button, Container, Form, FormControl, Table} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
 import style from './Hotel.module.css'
 
@@ -34,6 +34,8 @@ let HotelInsert = () => {
         {id: 15, label: '야외정원'}
     ];
 
+    const location = useLocation()
+    const userInfo = location.state.userInfo
 
     const [roadAddress, setRoadAddress] = useState("");
     const [buildingName, setBuildingName] = useState("");
@@ -80,7 +82,8 @@ let HotelInsert = () => {
             hotelName: buildingName,
             hotelPhone: inputs.hotelPhone,
             cityId: inputs.cityId,
-            facilities: selectedFacilities
+            facilities: selectedFacilities,
+            userId: userInfo.id
         }
         console.log(valueMap)
         try {
