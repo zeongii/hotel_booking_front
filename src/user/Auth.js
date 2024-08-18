@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import style from './User.module.css'
 
 
-let Auth = () => {
+let Auth = ({setUser}) => {
     let [inputs, setInputs] = useState({
         email: '',
         password: ''
@@ -25,6 +25,7 @@ let Auth = () => {
         navigate('/user/register')
     }
 
+
     let onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
@@ -39,13 +40,16 @@ let Auth = () => {
             withCredentials: true
         });
 
+        console.log(response)
+
         if (response.status === 200 && response.data.result === 'success') {
             let userInfo = {
                 id: response.data.id,
                 nickname: response.data.nickname,
                 role: response.data.role
             }
-            navigate('/', {state: {userInfo: userInfo}});
+            setUser(userInfo)
+            navigate('/hotel/showList', {state: {userInfo: userInfo}})
         }
     }
 

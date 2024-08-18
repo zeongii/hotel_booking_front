@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import axios from "axios";
 import Map from './Map';
@@ -11,6 +11,9 @@ const HotelOne = () => {
     const navigate = useNavigate();
     const params = useParams();
     const id = parseInt(params.id);
+
+    let location = useLocation()
+    let userInfo = location.state.userInfo
 
     const facility = [
         {id: 1, label: '️🏊‍♀️야외수영장'},
@@ -62,7 +65,11 @@ const HotelOne = () => {
         guestId: 1
     })
 
-    const [isWished, setIsWished] = useState(false);
+    const [isWished, setIsWished] = useState(() => {
+        // 초기 로드 시 localStorage에서 값을 불러옵니다.
+        const savedWishStatus = localStorage.getItem(`hotel-wished-${id}`);
+        return savedWishStatus === 'true'; // 저장된 값이 true이면 true로 설정
+    });
 
 
 
@@ -72,12 +79,15 @@ const HotelOne = () => {
 
             console.log(resp.data);
             console.log(wish)
-            setIsWished(!isWished);
+            const newWishStatus = !isWished;
+            setIsWished(newWishStatus);
+
+            // 새로 업데이트된 좋아요 상태를 localStorage에 저장
+            localStorage.setItem(`hotel-wished-${id}`, newWishStatus.toString());
         } catch (error) {
             console.error('Error adding/removing from wishlist:', error);
         }
     }
-
     useEffect(() => {
         const fetchHotelData = async () => {
             const resp = await axios.get(`http://localhost:8080/hotel/hotelOne/${id}`);
@@ -93,7 +103,7 @@ const HotelOne = () => {
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
-                const resp = await axios.get(`http://localhost:8080/room/showList/${id}`);
+                const resp = await axios.get(`http://localhost:8080/room/showList/${id}`, {state: {userInfo: userInfo}});
                 if (resp.status === 200) {
                     setRoomdata(resp.data);
                     setRoomType(resp.data.roomTypeList);

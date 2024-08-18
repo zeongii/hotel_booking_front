@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import travelingImage from './traveling.png';
 
 let HotelList = () => {
@@ -14,10 +14,13 @@ let HotelList = () => {
         setHotelIndex(selectedIndex)
     }
 
+    let location = useLocation()
+    let userInfo = location.state.userInfo
+
     let navigate = useNavigate()
 
     let moveHotelOne = (id) => {
-        navigate('/hotelOne/' + id)
+        navigate('/hotelOne/' + id, {state: {userInfo: userInfo}})
     }
 
     let moveInsert = () => {

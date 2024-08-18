@@ -1,4 +1,4 @@
-import {Button, Container, FormControl, Table , Alert } from "react-bootstrap";
+import {Button, Container, FormControl, Table, Alert} from "react-bootstrap";
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -22,19 +22,18 @@ let Auth = ({setUser}) => {
     let onSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage(''); // 이전 에러 메시지 초기화
-
+        let formData = new FormData();
+        formData.append('email', inputs.email);
+        formData.append('password', inputs.password);
         console.log("서버로 보내는 이메일:", inputs.email);  // 서버에 보내는 이메일
         console.log("서버로 보내는 비번:", inputs.password);  // 비밀번호 출력
 
         try {
             console.log("요청을 보내는 중입니다.");
             let response = await axios({
-                url: 'http://localhost:8080/guest/auth',
+                url: 'http://localhost:8080/user/auth',
                 method: 'POST',
-                data: {
-                    email: inputs.email,
-                    password: inputs.password
-                },
+                data: formData,
                 withCredentials: true
             }, []);
 
@@ -74,63 +73,71 @@ let Auth = ({setUser}) => {
     const handlePasswordSearch = () => {
         navigate('/guest/forgotPassword'); // 비밀번호 찾기 페이지로 이동
     };
+    const handleGuestRegister = () => {
+        navigate('/guest/register'); // 비밀번호 찾기 페이지로 이동
+    };
 
 
     return (
         <Container>
             <form onSubmit={onSubmit}>
-                <Table striped hover bordered>
+                <Table striped hover bordered className="text-center">
                     <thead>
                     <tr>
-                        <th colSpan={2} className="text-center">로그인</th>
+                        <th colSpan={2} className="text-center" style={{fontSize: '24px', padding: '20px 0'}}>로그인</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>이메일</th>
-                        <td>
+                        <th style={{width: '30%', verticalAlign: 'middle'}}>이메일</th>
+                        <td style={{padding: '15px'}}>
                             <FormControl
                                 type="text"
                                 name="email"
                                 value={inputs.email}
                                 onChange={onChange}
                                 required
+                                style={{padding: '10px', fontSize: '16px'}}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>비밀번호</th>
-                        <td>
+                        <th style={{verticalAlign: 'middle'}}>비밀번호</th>
+                        <td style={{padding: '15px'}}>
                             <FormControl
                                 type="password"
                                 name="password"
                                 value={inputs.password}
                                 onChange={onChange}
                                 required
+                                style={{padding: '10px', fontSize: '16px'}}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={2}>
-                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <Button type="submit">로그인</Button>
-                                <div>
-                                    <Button style={{marginRight: '5px'}} onClick={handleEmailSearch}>이메일 찾기</Button>
-                                    <Button onClick={handlePasswordSearch}>비밀번호 찾기</Button>
-                                </div>
+                        <td colSpan={2} style={{padding: '20px 0'}}>
+                            <div style={{textAlign: 'center', marginBottom: '10px'}}>
+                                <Button type="submit" style={{fontSize: '16px', padding: '10px 20px'}}>로그인</Button>
+                            </div>
+                            <div style={{display: 'flex', justifyContent: 'flex-end', gap: '10px'}}>
+                                <Button variant="outline-secondary" onClick={handleGuestRegister}
+                                        style={{fontSize: '14px'}}>회원가입</Button>
+                                <Button variant="outline-secondary" onClick={handleEmailSearch}
+                                        style={{fontSize: '14px'}}>이메일 찾기</Button>
+                                <Button variant="outline-secondary" onClick={handlePasswordSearch}
+                                        style={{fontSize: '14px'}}>비밀번호 찾기</Button>
                             </div>
                         </td>
-
                     </tr>
-                    <tr>
-                        <td colSpan={2} className="text-center" style={{paddingTop: '10px'}}>
-                            {errorMessage && (
+                    {errorMessage && (
+                        <tr>
+                            <td colSpan={2} className="text-center" style={{paddingTop: '10px'}}>
                                 <Alert variant="danger" style={{margin: '0', padding: '10px', fontSize: '14px'}}>
                                     {errorMessage}
                                 </Alert>
-                            )}
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    )}
                     </tbody>
                 </Table>
             </form>

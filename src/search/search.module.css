@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    border: 2px solid #d1e6ff;
+    border-radius: 5px;
+    padding: 30px;
+
+}
+
