@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
@@ -6,7 +6,11 @@ import style from './Room.module.css'
 
 
 let RoomRegister = () => {
-    let hotelId = parseInt(1);
+    let params = useParams()
+    let hotelId = params.hotelId
+
+    const location = useLocation()
+    const userInfo = location.state.userInfo
 
     const roomTypeList = [
         {id: 1, typeName: '스탠다드+싱글+시티뷰'},
@@ -31,13 +35,15 @@ let RoomRegister = () => {
         roomContent: '',
         /*checkIn: '',
         checkOut: '',*/
-        breakfastPrice: ''
+        breakfastPrice: '',
+        hotelId: hotelId,
+        userId: userInfo.id
     });
 
     let navigate = useNavigate();
 
     let moveToNext = (roomId) => {
-        navigate(`/room/roomImgInsert/${roomId}`);
+        navigate(`/room/roomImgInsert/${roomId}`, {state: {userInfo: userInfo}});
     };
 
     let onChange = (e) => {
@@ -66,6 +72,7 @@ let RoomRegister = () => {
                 }
             });
             console.log(resp)
+            console.log(userInfo)
             if (resp.data.roomId !== undefined) {
                 moveToNext(resp.data.roomId);
             }

@@ -47,7 +47,6 @@ const HotelOne = () => {
     const handleSelect = (selectedIndex) => setRoomIndex(selectedIndex);
     const handleHotelSelect = (selectedIndex) => setIndex(selectedIndex);
 
-    const roomInsert = (hotelId) => navigate(`/room/register/${hotelId}`, {state: {userInfo: userInfo}});
     const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`, {state: {userInfo: userInfo}});
     const onDelete = async () => {
         const resp = await axios.get(`http://localhost:8080/hotel/delete/${id}`);
@@ -55,6 +54,12 @@ const HotelOne = () => {
             navigate('//hotel/showList', {state: {userInfo: userInfo}});
         }
     };
+
+
+    let roomInsert = (hotelId) => {
+        navigate(`/room/register/${hotelId}`, {state: {userInfo: userInfo}})
+    }
+
 
     const onUpdate = () => {
         navigate('/hotelUpdate/' + id, {state: {userInfo: userInfo}})
@@ -93,6 +98,7 @@ const HotelOne = () => {
             setHotelData(resp.data.hotelDto);
             setFileData(resp.data.hotelFileDtoList);
             setFacilities(resp.data.facilities);
+            console.log(resp)
         };
         fetchHotelData();
     }, [id]);
@@ -188,9 +194,9 @@ const HotelOne = () => {
 
             </div>
 
-            <div style={{ marginTop: '50px' }}>
+            <div style={{ marginTop: '20px' }}>
                 {hotelData.userId === userInfo.id && (
-                    <Button onClick={roomInsert} style={button}>방 등록하기</Button>
+                    <Button onClick={() => roomInsert(hotelData.id)} style={button}>방 등록하기</Button>
                 )}
             </div>
 

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {Button, Carousel, Container, Nav, Navbar, Row, Table} from "react-bootstrap";
 /*resultMap.put("reservationDto", reservationDto);
@@ -16,6 +16,8 @@ let ReservationOne = () => {
 
     let [fileData, setFileData] = useState([]) // 룸 파일 리스트
     const [roomIndex, setRoomIndex] = useState(0)
+
+
 
 
     const handleSelect = (selectedIndex) => {
@@ -91,17 +93,6 @@ let ReservationOne = () => {
                         </Carousel.Item>
                     ))}
                 </Carousel>
-                <Navbar expand="lg" className="bg-body-tertiary">
-                    <Container className=".nav-container">
-                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link href="#home">Home</Nav.Link>
-                                <Nav.Link href="#link">Link</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
 
                 <Table striped bordered hover>
                     <thead>

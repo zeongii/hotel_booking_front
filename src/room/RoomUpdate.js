@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Container, FormControl, FormSelect, Table} from "react-bootstrap";
@@ -8,6 +8,9 @@ import style from './Room.module.css'
 let RoomUpdate = () => {
     let parms = useParams()
     let roomId = parms.roomId
+
+    const location = useLocation()
+    const userInfo = location.state.userInfo
 
     const roomTypeList = [
         {id: 1, typeName: '스탠다드+싱글+시티뷰'},
@@ -43,7 +46,7 @@ let RoomUpdate = () => {
     }
     let nevigate = useNavigate()
     let moveToNext = (id) => {
-        nevigate(`/room/roomOne/${id}`)
+        nevigate(`/room/roomOne/${id}`,  {state: {userInfo: userInfo}})
     }
 
     let onSubmit = async (e) => {

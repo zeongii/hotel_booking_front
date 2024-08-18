@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useState} from "react";
 import axios from "axios";
 import {Button, Container, Form} from "react-bootstrap";
@@ -12,8 +12,12 @@ let RoomImgInsert = () => {
 
     let navigate = useNavigate()
 
+
+    const location = useLocation()
+    const userInfo = location.state.userInfo
+
     let moveToNext  = (id) => {
-        navigate('/room/roomOne/' + id)
+        navigate('/room/roomOne/' + id, {state: {userInfo: userInfo}})
     }
 
 

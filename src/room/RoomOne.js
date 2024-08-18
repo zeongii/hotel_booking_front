@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {Button, Carousel, Container, Nav, Navbar, Row, Table} from "react-bootstrap";
 import styles from './Room.module.css'
@@ -21,19 +21,16 @@ let RoomOne = () => {
 
     let nevigate = useNavigate()
 
-
-    // 나중에 호텔 아이디 받아오면 수정필요한 부분
-    let goBack = () => {
-        nevigate(-1)
-    }
+    const location = useLocation()
+    const userInfo = location.state.userInfo
 
 
     let onUpdate = () => {
-        nevigate('/room/roomUpdate/' + roomId)
+        nevigate('/room/roomUpdate/' + roomId, {state: {userInfo: userInfo}})
     }
 
     let moveToReservation = () => {
-        nevigate(`/reservation/roomReservation/` + roomId)
+        nevigate(`/reservation/roomReservation/` + roomId, {state: {userInfo: userInfo}})
     }
 
     useEffect(() => {
@@ -43,6 +40,7 @@ let RoomOne = () => {
                     withCredentials: true
                 })
                 console.log(resp)
+                console.log(userInfo)
                 setData(resp.data.roomDto)
                 setRoomType(resp.data.roomTypeList)
                 let temp = resp.data.roomFileDtoList
@@ -60,11 +58,11 @@ let RoomOne = () => {
     let onDelete = async () => {
         let resp = await axios.get('http://localhost:8080/room/delete/' + roomId, {
             withCredentials: true
-        })
+        }, {state: {userInfo: userInfo}})
 
         if (resp.status === 200) {
             // 이부분 에서도 호텔 아이디 값으로 반환 필요
-            nevigate('/hotel/hotelOne/1')
+            nevigate('/hotelOne/' + data.hotelId)
         }
 
     }
@@ -146,7 +144,7 @@ let RoomOne = () => {
                                 <td colSpan={3}>{data.roomContent}</td>
                             </tr>
                             <tr>
-                                <td colSpan={3}>{data.breakfastPrice}</td>
+                               <td colSpan={3}>조식가격: &emsp; {data.breakfastPrice}</td>
                             </tr>
                             <tr className={"text-center"}>
                                 <td><Button onClick={moveToReservation} style={button}>예약하기</Button></td>
@@ -157,6 +155,8 @@ let RoomOne = () => {
                 </div>
                 <Table>
                     <tbody>
+                    {data.userId === userInfo.id && (
+
                     <tr>
                         <td>
                             <Button onClick={onUpdate}>수정하기</Button>
@@ -168,6 +168,7 @@ let RoomOne = () => {
 
                         </td>
                     </tr>
+                        )}
                     </tbody>
                 </Table>
             </Row>
