@@ -20,7 +20,16 @@ let HotelList = () => {
     let navigate = useNavigate()
 
     let moveHotelOne = (id) => {
-        navigate('/hotelOne/' + id, {state: {userInfo: userInfo}})
+        navigate('/hotelOne/' + id, {
+            state: {
+                userInfo: userInfo,
+                searchData: {
+                    startDate: "",
+                    endDate: '',
+                    peopleCount: ''
+                }
+            }
+        })
     }
 
     let moveInsert = () => {
@@ -73,7 +82,7 @@ let HotelList = () => {
                         <Card.Body onClick={() => moveHotelOne(h.id)}>
                             <Card.Title>{h.hotelName}</Card.Title>
                             <Card.Text>
-                                호텔 정보 넣기
+
                             </Card.Text>
                             <Button style={button}>예약하러 가기</Button>
                         </Card.Body>

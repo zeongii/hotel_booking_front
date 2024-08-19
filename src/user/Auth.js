@@ -76,22 +76,23 @@ let Auth = ({setUser}) => {
     }
 
     return (
-        <div className={style.register}>
+        <div >
             <Container>
-                <form onSubmit={onSubmit}>
-                    <Table hover>
+                <form onSubmit={onSubmit} className={style.register}>
+                    <Table  hover className="text-center">
                         <thead>
                         <tr>
-                            <td colSpan={2}>로그인</td>
+                            <td colSpan={2} style={{fontSize: '24px', padding: '20px 0'}}>로그인</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>아이디<FormControl
+                            <td >아이디<FormControl
                                 type={'email'}
                                 name={'email'}
                                 value={inputs.email}
-                                onChange={onChange}/>
+                                onChange={onChange}
+                                style={{padding: '10px', fontSize: '16px'}}/>
                             </td>
                         </tr>
                         <tr>
@@ -99,7 +100,8 @@ let Auth = ({setUser}) => {
                                 type={'password'}
                                 name={'password'}
                                 value={inputs.password}
-                                onChange={onChange}/>
+                                onChange={onChange}
+                                style={{padding: '10px', fontSize: '16px'}}/>
                             </td>
                         </tr>
                         <tr>

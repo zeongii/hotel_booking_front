@@ -146,6 +146,7 @@ let RoomOne = () => {
                             <tr>
                                <td colSpan={3}>조식가격: &emsp; {data.breakfastPrice}</td>
                             </tr>
+
                             <tr className={"text-center"}>
                                 <td><Button onClick={moveToReservation} style={button}>예약하기</Button></td>
                             </tr>

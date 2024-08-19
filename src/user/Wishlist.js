@@ -33,8 +33,6 @@ const Wishlist = () => {
                 <thead>
                 <tr>
                     <th>호텔 ID</th>
-                    <th>호텔 이름</th>
-                    <th>위치</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,8 +40,6 @@ const Wishlist = () => {
                     wishlist.map((item) => (
                         <tr key={item.hotelId}>
                             <td>{item.hotelId}</td>
-                            <td>{item.hotelName}</td>
-                            <td>{item.location}</td>
                         </tr>
                     ))
                 ) : (

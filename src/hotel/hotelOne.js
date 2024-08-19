@@ -1,11 +1,12 @@
 import React, {useRef, useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {Button, Card, Carousel, Container, Table} from "react-bootstrap";
+import {Button, Card, Carousel, Container, Form, Table} from "react-bootstrap";
 import axios from "axios";
 import Map from './Map';
 import travelingImage from './traveling.png';
 import style from './Hotel.module.css'
 import {AiFillHeart} from "react-icons/ai";
+import DatePicker from "react-datepicker";
 
 const HotelOne = () => {
     const navigate = useNavigate();
@@ -14,6 +15,11 @@ const HotelOne = () => {
 
     let location = useLocation()
     let userInfo = location.state.userInfo
+
+    const [startDate, setStartDate] = useState(location.state.searchData.startDate);
+    const [endDate, setEndDate] = useState(location.state.searchData.endDate);
+    const [peopleCount, setPeopleCount] = useState(location.state.searchData.peopleCount);
+
 
     const facility = [
         {id: 1, label: '️🏊‍♀️야외수영장'},
@@ -47,7 +53,10 @@ const HotelOne = () => {
     const handleSelect = (selectedIndex) => setRoomIndex(selectedIndex);
     const handleHotelSelect = (selectedIndex) => setIndex(selectedIndex);
 
-    const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`, {state: {userInfo: userInfo}});
+    const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`, {
+        state: {
+            userInfo: userInfo
+        }});
     const onDelete = async () => {
         const resp = await axios.get(`http://localhost:8080/hotel/delete/${id}`);
         if (resp.status === 200) {
@@ -111,6 +120,7 @@ const HotelOne = () => {
                 if (resp.status === 200) {
                     setRoomdata(resp.data);
                     setRoomType(resp.data.roomTypeList);
+                    console.log(resp);
                 }
             } catch (e) {
                 console.error(e);
@@ -119,9 +129,91 @@ const HotelOne = () => {
         fetchRoomData();
     }, [id]);
 
+    const addPeople = () => {
+        if (peopleCount < 9) {
+            setPeopleCount(peopleCount + 1);
+        }
+    }
+
+    const minusPeople = () => {
+        if (peopleCount > 1) {
+            setPeopleCount(peopleCount - 1);
+        }
+    }
+
+    let searchByCondition = async (e) => {
+        e.preventDefault();
+        const params = {
+            hotelId: id,
+            startDate: startDate,
+            endDate: endDate,
+            peopleCount: peopleCount
+        }
+        try {
+            const response = await axios.post('http://localhost:8080/room/showListByCondition', params)
+            console.log(response);
+            setRoomdata(response.data);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <Container className={"mt-3"}>
+            <Form onSubmit={searchByCondition}>
+                <Table>
+                    <thead>
+                    <tr>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={new Date()}
+                                selected={startDate}
+                                placeholderText='시작 날짜'
+                                onChange={(date) => {
+                                    setStartDate(date);
+                                }}
+                            />
+                        </td>
+                        <td valign='middle' align='center'>
+                            <DatePicker
+                                dateFormat='yyyy-MM-dd'
+                                shouldCloseOnSelect
+                                minDate={Math.max(startDate, new Date())}
+                                selected={endDate}
+                                placeholderText='마지막 날짜'
+                                onChange={(date) => {
+                                    setEndDate(date);
+                                }}
+                            />
+                        </td>
+                        <td valign='middle' align='center'>
+                            <Table>
+                                <tbody>
+                                <tr>
+                                    <th>
+                                        <Button onClick={minusPeople}>-</Button>
+                                    </th>
+                                    <th>
+                                        <input type='text' className='form-control' disabled='true'
+                                               value={'인원수: ' + peopleCount}/>
+                                    </th>
+                                    <th>
+                                        <Button onClick={addPeople}>+</Button>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </Table>
+                        </td>
+                        <td valign='middle' align='center'>
+                            <Button type="submit">검색</Button>
+                        </td>
+                    </tr>
+                    </thead>
+                </Table>
+            </Form>
             <Carousel activeIndex={index} onSelect={handleHotelSelect} className="carousel-container">
                 {fileData.length > 0 ? (
                     fileData.map((file) => (
@@ -194,7 +286,7 @@ const HotelOne = () => {
 
             </div>
 
-            <div style={{ marginTop: '20px' }}>
+            <div style={{marginTop: '20px'}}>
                 {hotelData.userId === userInfo.id && (
                     <Button onClick={() => roomInsert(hotelData.id)} style={button}>방 등록하기</Button>
                 )}

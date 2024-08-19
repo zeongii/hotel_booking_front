@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
 const UserDetails = () => {
     const { id } = useParams(); // URL에서 id를 가져옴
@@ -9,12 +9,16 @@ const UserDetails = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    let location = useLocation()
+    let userInfo = location.state.userInfo
+
     useEffect(() => {
         if (id) {
             const fetchUserDetails = async () => {
                 try {
                     const response = await axios.get(`http://localhost:8080/admin/${id}`);
                     setUser(response.data);
+                    console.log(response)
                 } catch (error) {
                     console.error('Failed to fetch user details:', error);
                     setError('Failed to load user details');

@@ -18,12 +18,17 @@ let MyHotel = () => {
 
     let navigate = useNavigate()
 
-    let moveHotelOne = (id) => {
-        navigate('/hotelOne/' + id, {state: {userInfo: userInfo}})
+    let moveHotelOne = () => {
+        navigate('/MyHotelOne', {
+            state: {
+                userInfo: userInfo,
+            }
+        })
     }
 
+
     let moveInsert = () => {
-        navigate('/hotelInsert')
+        navigate('/hotelInsert', {state: {userInfo: userInfo}})
     }
 
 
@@ -37,6 +42,7 @@ let MyHotel = () => {
             if (resp.status === 200) {
                 setData(resp.data)
                 console.log(resp.data)
+
             }
         }
         showHotelList()
@@ -48,40 +54,43 @@ let MyHotel = () => {
                 {data.hotelList
                     .filter(h => h.userId === userInfo.id) // 필터링을 추가
                     .map(h =>
-                    <Card style={{width: '18rem'}}>
-                        <Carousel activeIndex={hotelIndex} onSelect={handleSelect} className="carousel-container">
-                            {h.imageList.length > 0 ? (
-                                h.imageList.map((hotelImages, imgIndex) => (
-                                    <Carousel.Item key={imgIndex}>
-                                        <div style={styles.imageContainer}>
-                                            <Card.Img
-                                                src={`http://localhost:8080/hotel/${hotelImages}`}
-                                                alt={hotelImages}
-                                                style={styles.image}
-                                            />
-                                        </div>
-                                    </Carousel.Item>
-                                ))
-                            ) : (
-                                <div style={styles.imageContainer}>
-                                    <Card.Img
-                                        src={travelingImage}
-                                        alt="기본 이미지"
-                                        style={styles.image}
-                                    />
-                                </div>
-                            )}
-                        </Carousel>
+                        <Card style={{width: '18rem'}}>
+                            <Carousel activeIndex={hotelIndex} onSelect={handleSelect} className="carousel-container">
+                                {h.imageList.length > 0 ? (
+                                    h.imageList.map((hotelImages, imgIndex) => (
+                                        <Carousel.Item key={imgIndex}>
+                                            <div style={styles.imageContainer}>
+                                                <Card.Img
+                                                    src={`http://localhost:8080/hotel/${hotelImages}`}
+                                                    alt={hotelImages}
+                                                    style={styles.image}
+                                                />
+                                            </div>
+                                        </Carousel.Item>
+                                    ))
+                                ) : (
+                                    <div style={styles.imageContainer}>
+                                        <Card.Img
+                                            src={travelingImage}
+                                            alt="기본 이미지"
+                                            style={styles.image}
+                                        />
+                                    </div>
+                                )}
+                            </Carousel>
 
-                        <Card.Body onClick={() => moveHotelOne(h.id)}>
-                            <Card.Title>{h.hotelName}</Card.Title>
-                            <Card.Text>
-                                호텔 정보 넣기
-                            </Card.Text>
-                            <Button style={button}>예약하러 가기</Button>
-                        </Card.Body>
-                    </Card>
-                )}
+                            <Card.Body onClick={() => moveHotelOne(h.id)}>
+                                <Card.Title>{h.hotelName}</Card.Title>
+                                <Card.Text>
+
+                                </Card.Text>
+                                <Button style={button}>예약하러 가기</Button>
+                            </Card.Body>
+                        </Card>
+                    )}
+            </div>
+            <div>
+                <Button style={button} onClick={moveInsert}>호텔 추가하기</Button> &emsp;
             </div>
         </Container>
     )

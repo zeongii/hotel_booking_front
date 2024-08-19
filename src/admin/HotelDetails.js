@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 const HotelDetails = () => {
-    const { id } = useParams();
+    let param = useParams()
+    let id = param.id
     const [hotel, setHotel] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    let location = useLocation()
+    let userInfo = location.state.userInfo
+
     useEffect(() => {
         const fetchHotelDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/hotel/hotelOne/${id}`);
+                const response = await axios.get(`http://localhost:8080/hotel/hotelOne/` + id);
                 setHotel(response.data);
             } catch (error) {
                 setError('Failed to fetch hotel details');

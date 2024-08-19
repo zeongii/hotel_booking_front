@@ -2,6 +2,7 @@ import {Button, Container, FormControl, Table, Alert} from "react-bootstrap";
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import style from './User.module.css'
 
 let Auth = ({setUser}) => {
     let [inputs, setInputs] = useState({
@@ -86,8 +87,8 @@ let Auth = ({setUser}) => {
 
     return (
         <Container>
-            <form onSubmit={onSubmit}>
-                <Table striped hover bordered className="text-center">
+            <form onSubmit={onSubmit} className={style.register}>
+                <Table hover className="text-center">
                     <thead>
                     <tr>
                         <th colSpan={2} className="text-center" style={{fontSize: '24px', padding: '20px 0'}}>로그인</th>
@@ -95,8 +96,7 @@ let Auth = ({setUser}) => {
                     </thead>
                     <tbody>
                     <tr>
-                        <th style={{width: '30%', verticalAlign: 'middle'}}>이메일</th>
-                        <td style={{padding: '15px'}}>
+                        <td style={{width: '30%', verticalAlign: 'middle'}}>이메일
                             <FormControl
                                 type="text"
                                 name="email"
@@ -108,8 +108,7 @@ let Auth = ({setUser}) => {
                         </td>
                     </tr>
                     <tr>
-                        <th style={{verticalAlign: 'middle'}}>비밀번호</th>
-                        <td style={{padding: '15px'}}>
+                        <td style={{verticalAlign: 'middle'}}>비밀번호
                             <FormControl
                                 type="password"
                                 name="password"

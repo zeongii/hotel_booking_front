@@ -21,9 +21,9 @@ const SearchHotel = () => {
         let location = useLocation()
 
         const userInfo = location.state?.userInfo || {
-            id:0,
+            id: 0,
             nickname: 'visitor',
-            role:'visitor'
+            role: 'visitor'
         }
 
         let [searchParams, setSearchParams] = useState({
@@ -173,7 +173,16 @@ const SearchHotel = () => {
         let navigate = useNavigate()
 
         let moveHotelOne = (id) => {
-            navigate('/hotelOne/' + id, {state: {userInfo: userInfo}})
+            navigate('/hotelOne/' + id, {
+                state: {
+                    userInfo: userInfo,
+                    searchData: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        peopleCount: peopleCount
+                    }
+                }
+            })
         }
 
 

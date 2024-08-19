@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Container, Table} from "react-bootstrap";
 import {useLocation, useNavigate} from "react-router-dom";
 import style from './User.module.css'
+import HotelDetails from "../admin/HotelDetails";
 
 const BusinessPage = () => {
 
@@ -14,12 +15,12 @@ const BusinessPage = () => {
         return <p>사용자 정보를 불러올 수 없습니다.</p>;
     }
 
+    let HotelDetails = () => {
+        navigate('/admin/hotelDetails', {state: {userInfo: userInfo}})
+    }
 
-
-    let myHotel = () => {
-        navigate('/myHotel', {state: {
-            userInfo: userInfo
-        }})
+    let UserDetails = () => {
+        navigate('/admin/userDetails ', {state: {userInfo: userInfo}})
     }
 
 
@@ -56,7 +57,8 @@ const BusinessPage = () => {
                 </tr>
                 <tr>
                     <td colSpan="2">
-                        <Button style={button} onClick={myHotel}>내 호텔목록</Button>
+                        <Button style={button} onClick={HotelDetails}>호텔관리</Button> &emsp;
+                        <Button style={button} onClick={UserDetails}>유저 관리</Button>
 
                     </td>
                 </tr>

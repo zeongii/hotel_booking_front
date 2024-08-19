@@ -30,16 +30,19 @@ let ReservationOne = () => {
         e.preventDefault();
 
         try {
-            let resp = await axios.post(`http://localhost:8080/reservation/canceled/${reservationId}`, {
+            let resp = await axios.post(`http://localhost:8080/reservation/canceled/` + reservationId, {
                 data: data,
                 roomType: roomType,
                 reservationOne: reservationOne,
                 fileData: fileData
-            }, {
+            },
+                {
                 withCredentials: true
+
             })
 
-            nevigate('/hotel/hotelAll')
+
+            nevigate('/')
 
         } catch (error) {
             console.error(error)
@@ -56,11 +59,14 @@ let ReservationOne = () => {
                 let resp = await axios.get('http://localhost:8080/reservation/showOne/' + reservationId, {
                     withCredentials: true
                 })
+
                 // 셀렉트 원에서 보낼 애들 확인해서 맞춰주기
                 setData(resp.data.roomDto)
                 setRoomType(resp.data.roomTypeList)
                 setFileData(resp.data.roomFileDtoList)
                 setReservationOne(resp.data.reservationDto)
+                console.log(resp)
+
 
 
             } catch (e) {
@@ -96,11 +102,7 @@ let ReservationOne = () => {
 
                 <Table striped bordered hover>
                     <thead>
-                    <tr>
-                        <td>
-                            <h1>방 이름: {data.roomName}</h1>
-                        </td>
-                    </tr>
+
                     </thead>
                     <tbody>
                     <tr>
