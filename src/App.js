@@ -83,7 +83,7 @@ const App = ({setUserInfo})  => {
                 <Route path="/hotelOne/:id" element={<HotelOne/>}/>
                 <Route path="/hotelInsert" element={<HotelInsert/>}/>
                 <Route path="/myHotel" element={<MyHotel/>}/>
-                <Route path="/myHotelOne" element={<MyHotelOne/>}/>
+                <Route path="/myHotelOne/:id" element={<MyHotelOne/>}/>
                 <Route path="/imgInsert/:id" element={<HotelImgInsert/>}/>
                 <Route path="/hotelUpdate/:id" element={<HotelUpdate/>}/>
                 <Route path="/room/register/:hotelId" element={<RoomRegister/>}/>
