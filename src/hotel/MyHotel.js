@@ -18,10 +18,10 @@ let MyHotel = () => {
 
     let navigate = useNavigate()
 
-    let moveHotelOne = () => {
-        navigate('/MyHotelOne', {
+    let moveHotelOne = (id) => {
+        navigate('/myHotelOne/' + id, {
             state: {
-                userInfo: userInfo,
+                userInfo: userInfo
             }
         })
     }
@@ -84,7 +84,7 @@ let MyHotel = () => {
                                 <Card.Text>
 
                                 </Card.Text>
-                                <Button style={button}>예약하러 가기</Button>
+                                <Button style={button}>호텔 관리</Button>
                             </Card.Body>
                         </Card>
                     )}
