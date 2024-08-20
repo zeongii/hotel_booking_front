@@ -23,14 +23,36 @@ let RoomOne = () => {
 
     const location = useLocation()
     const userInfo = location.state.userInfo
-
+    let [inputs, setInputs] = useState({
+        startDate: location.state.searchData.startDate,
+        endDate: location.state.searchData.endDate,
+        peopleCount: location.state.peopleCount,
+        isBreakfast: 0,
+        enabled: 1
+    });
 
     let onUpdate = () => {
         nevigate('/room/roomUpdate/' + roomId, {state: {userInfo: userInfo}})
     }
 
-    let moveToReservation = () => {
-        nevigate(`/reservation/roomReservation/` + roomId, {state: {userInfo: userInfo}})
+    let moveToNext = (reservationId) => {
+        nevigate(`/reservation/roomReservationOne/${reservationId}`)
+    }
+
+    let moveToReservation = async (e) => {
+        e.preventDefault();
+
+        try {
+            let resp = await axios.post(`http://localhost:8080/reservation/roomReservation/${roomId}`, inputs, {
+                withCredentials: true
+            });
+
+            if (resp.data.reservationId !== undefined) {
+                moveToNext(resp.data.reservationId);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {

@@ -55,8 +55,8 @@ const MyReservations = () => {
                     reservations.map((reservation) => (
                         <tr key={reservation.id} onClick={() => moveToOne(reservation.id)}>
                             <td >{reservation.id}</td>
-                            <td>{reservation.startDate}</td>
-                            <td>{reservation.endDate}</td>
+                            <td>{new Date(reservation.startDate).toLocaleDateString('ko-KR')}</td>
+                            <td>{new Date(reservation.endDate).toLocaleDateString('ko-KR')}</td>
                             <td>{reservation.enabled===1? '예약':'예약 취소'}</td>
                         </tr>
                     ))

@@ -63,6 +63,7 @@ let Auth = ({setUser}) => {
                 }
 
                 setUser(userInfo)
+
                 navigate('/hotel/showList', {state: {userInfo: userInfo}})
             }
         } catch (error) {

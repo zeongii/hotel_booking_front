@@ -179,7 +179,7 @@ const SearchHotel = () => {
                     searchData: {
                         startDate: startDate,
                         endDate: endDate,
-                        peopleCount: peopleCount
+                        peopleCount: searchParams.peopleCount
                     }
                 }
             })
@@ -215,7 +215,7 @@ const SearchHotel = () => {
                                     dateFormat='yyyy-MM-dd'
                                     shouldCloseOnSelect
                                     minDate={Math.max(searchParams.startDate, new Date())}
-                                    selected={searchParams.endDate}
+                                    selected={endDate}
                                     placeholderText='마지막 날짜'
                                     onChange={(date) => {
                                         setEndDate(date);

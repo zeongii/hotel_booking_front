@@ -20,7 +20,6 @@ const HotelOne = () => {
     const [endDate, setEndDate] = useState(location.state.searchData.endDate);
     const [peopleCount, setPeopleCount] = useState(location.state.searchData.peopleCount);
 
-
     const facility = [
         {id: 1, label: '️🏊‍♀️야외수영장'},
         {id: 2, label: '🤿실내수영장'},
@@ -55,7 +54,12 @@ const HotelOne = () => {
 
     const moveToSingle = (roomId) => navigate(`/room/roomOne/${roomId}`, {
         state: {
-            userInfo: userInfo
+            userInfo: userInfo ,//추가로 starDate 등등 넣어주기,
+            searchData: {
+                startDate: startDate,
+                endDate: endDate,
+                peopleCount: peopleCount
+            }
         }});
     const onDelete = async () => {
         const resp = await axios.get(`http://localhost:8080/hotel/delete/${id}`);

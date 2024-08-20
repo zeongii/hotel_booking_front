@@ -134,7 +134,7 @@ let ReservationOne = () => {
                     </tr>
                     <tr>
                         <td colSpan={3}>가격:
-                            {reservationOne.payPrice}
+                            {reservationOne.payPrice}(1박가격: {data.roomPrice})
                         </td>
                     </tr>
                     <tr>
